@@ -527,18 +527,19 @@ if "!HAKCHI_MODE!" == "USB " (
 		mkdir !inputdirname!\hakchi\saves
 		mkdir !inputdirname!\hakchi\games
 		mkdir !inputdirname!\hakchi\fonts
-		mkdir !inputdirname!\hakchi\firmware
 		echo [OK] - Created the file structure!	
 	)
 )
 
+rem Dunno if we should create another folder on top of what the user decides...
+rem effectively they can call it bananas for all I care. #IDGAF
 if "!HAKCHI_MODE!" == "NAND" (
 	echo Creating file structure on your local device...
 	if "!INSTALL_MODE!" == "INSTALL" (
-		mkdir !inputdirname!\hakchi2ce
+		mkdir !inputdirname!\extras
 	)
 	if "!INSTALL_MODE!" == "UPDATE " (
-		mkdir !inputnanddirname!\hakchi2ce
+		mkdir !inputnanddirname!\extras
 	)
 	echo [OK] - Created the file structure!
 )
@@ -754,9 +755,9 @@ rem ============================================================================
 rem TODO: we could function'ise' a lot of this but every mod is slightly different so maybe it's 
 rem best to keep it like this so we can chop and swap stuff as and when we need to...
 echo.
-echo -------------------------------------------
+echo ----------------------------------------------
 echo Hakchi Options Menu by CompCom
-echo -------------------------------------------
+echo ----------------------------------------------
 echo This is a options pack which comes with a ton of functionality and useful tools for your
 echo Hakchi build. Not only does it contains such things as hmod manager it comes bundled with
 echo the hibernate mod which allows you to remotely hibernate your console.
@@ -832,12 +833,11 @@ if NOT DEFINED CUSTOM1 (set CUSTOM1=N)
 echo.
 rem ============================================================================================
 rem don't install power mod if option mod installed as it conflicts. Actually, it doesn't... Just don't do it.
-echo !CUSTOM1!
 if "!CUSTOM1!" == "N" (
 	echo.
-	echo -------------------------------------------
+	echo ----------------------------------------------
 	echo Hibernate Mod ^(Lite^) by Swingflip
-	echo -------------------------------------------
+	echo ----------------------------------------------
 	echo This is a mod which enables a power menu when you hold L ^+ R ^+ UP during gameplay
 	echo or when in the menus. You have an option to hibernate or put your console in to
 	echo standby just like if you were using the XBOX or Playstation. You can also remotely
@@ -853,7 +853,7 @@ if "!CUSTOM1!" == "N" (
 	set CustomContentBuildURL=https://github.com/swingflip/Hakchi-Hibernate-Mod/releases/download/Deluxe_Lite_1_1_3/hibernate_mod_lite_v1_3.hmod
 	set CustomContentBuildLastUpdated=6th Feburary 2018
 	echo Downloading the latest !CustomContentBuild! build...
-	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue1 )
+	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue2 )
 	if exist !temp!\!CustomContentBuild!.hmod (
 	del !temp!\!CustomContentBuild!.hmod
 	)
@@ -915,7 +915,242 @@ if "!CUSTOM1!" == "N" (
 	echo.
 )
 rem ============================================================================================
+echo.
+echo ----------------------------------------------
+echo Canoe Save Compression Mod ^(FAST^) by CompCom
+echo ----------------------------------------------
+echo This mod compresses all canoe save states using 7zip. This turns canoe save states from
+echo 2mb to less than 300kb in most cases.
+:AskCustomContent3
+set INPUT=
+set /P INPUT="Do you want to install Canoe Save Compression Mod^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto InstallCustomContent3
+if /I "!INPUT!"=="n" goto Continue3
+echo Incorrect input & goto AskCustomContent3
+:InstallCustomContent3
+set CustomContentBuild=canoe_save_compress_fast_v1_2
+set CustomContentBuildURL=https://github.com/CompCom/hmrepo/raw/master/canoe_save_compress_fast.hmod
+set CustomContentBuildLastUpdated=9th Feburary 2018
+echo Downloading the latest !CustomContentBuild! build...
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue3 )
+if exist !temp!\!CustomContentBuild!.hmod (
+del !temp!\!CustomContentBuild!.hmod
+)
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+if not %errorlevel%==0 (
+	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+	pause
+	exit /b
+)
+if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+echo.
 
+rem echo Unzipping package...
+rem mkdir !tmp!\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem if not %errorlevel%==0 (
+rem 	echo [ERROR] - Couldn't download unzip downloaded package
+rem 	del !temp!\package.zip
+rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+rem 	pause
+rem 	exit /b
+rem )
+rem del !temp!\package.zip
+rem echo [OK] - Unzipped succesfully!
+
+rem We transfer directly into the hmod so they get installed during the kernel flash
+if "!HAKCHI_MODE!" == "NAND" (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+	)
+)
+rem We transfer to the transfer folder as these should just install when run
+if "!HAKCHI_MODE!" == "USB " (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		mkdir %inputdirname:~0,2%\hakchi\transfer		
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		mkdir !inputdirname!\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+)
+echo [OK] - Installed !CustomContentBuild! Successfully!
+rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+set CUSTOM3=Y
+:Continue3
+if NOT DEFINED CUSTOM3 ( set CUSTOM3=N )
+echo.
+rem ============================================================================================
+echo.
+echo ----------------------------------------------
+echo RetroArch 1.7.0 compiled by KMFDManic
+echo ----------------------------------------------
+echo Retroarch is the core application for your emulation needs. You will need RetroArch if you
+echo intend on using any emulator on the system that isn't the default built in one. This
+echo retroarch is set up specificly to work with the current release of Hakchi2ce
+:AskCustomContent4
+set INPUT=
+set /P INPUT="Do you want to install RetroArch 1.7.0^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto InstallCustomContent4
+if /I "!INPUT!"=="n" goto Continue4
+echo Incorrect input & goto AskCustomContent4
+:InstallCustomContent4
+set CustomContentBuild=RetroArch_v1_7_0
+set CustomContentBuildURL=https://github.com/KMFDManic/NESC-SNESC-Modifications/releases/download/v.2.5-2018-CE/_km_retroarch_170.hmod
+set CustomContentBuildLastUpdated=9th Feburary 2018
+echo Downloading the latest !CustomContentBuild! build...
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue4 )
+if exist !temp!\!CustomContentBuild!.hmod (
+del !temp!\!CustomContentBuild!.hmod
+)
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+if not %errorlevel%==0 (
+	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+	pause
+	exit /b
+)
+if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+echo.
+
+rem echo Unzipping package...
+rem mkdir !tmp!\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem if not %errorlevel%==0 (
+rem 	echo [ERROR] - Couldn't download unzip downloaded package
+rem 	del !temp!\package.zip
+rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+rem 	pause
+rem 	exit /b
+rem )
+rem del !temp!\package.zip
+rem echo [OK] - Unzipped succesfully!
+
+rem We transfer directly into the hmod so they get installed during the kernel flash
+if "!HAKCHI_MODE!" == "NAND" (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+	)
+)
+rem We transfer to the transfer folder as these should just install when run
+if "!HAKCHI_MODE!" == "USB " (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		mkdir %inputdirname:~0,2%\hakchi\transfer		
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		mkdir !inputdirname!\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+)
+echo [OK] - Installed !CustomContentBuild! Successfully!
+rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+set CUSTOM4=Y
+:Continue4
+if NOT DEFINED CUSTOM4 ( set CUSTOM4=N )
+echo.
+rem ============================================================================================
+echo.
+echo ----------------------------------------------
+echo Super Famicom English Translation by rhester72
+echo ----------------------------------------------
+echo This is a mod which will translate the Super famicom menu into english. Obviously this is
+echo only required if you have a Super Famicom and want it translated into english...
+echo I highly recommended NOT installing this on anything but a Super Famicom...
+:AskCustomContent6
+set INPUT=
+set /P INPUT="Do you want to install Super Famicom Translation^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto InstallCustomContent6
+if /I "!INPUT!"=="n" goto Continue6
+echo Incorrect input & goto AskCustomContent6
+:InstallCustomContent6
+set CustomContentBuild=sfc_eng_menu_hack_v0_4
+set CustomContentBuildURL=http://www.rendezvo.us/snes/sfc_eng_menu_hack-0.4.hmod
+set CustomContentBuildLastUpdated=9th Feburary 2018
+echo Downloading the latest !CustomContentBuild! build...
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
+if exist !temp!\!CustomContentBuild!.hmod (
+del !temp!\!CustomContentBuild!.hmod
+)
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+if not %errorlevel%==0 (
+	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+	pause
+	exit /b
+)
+if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+echo.
+
+rem echo Unzipping package...
+rem mkdir !tmp!\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem if not %errorlevel%==0 (
+rem 	echo [ERROR] - Couldn't download unzip downloaded package
+rem 	del !temp!\package.zip
+rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+rem 	pause
+rem 	exit /b
+rem )
+rem del !temp!\package.zip
+rem echo [OK] - Unzipped succesfully!
+
+rem We transfer directly into the hmod so they get installed during the kernel flash
+if "!HAKCHI_MODE!" == "NAND" (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+	)
+)
+rem We transfer to the transfer folder as these should just install when run
+if "!HAKCHI_MODE!" == "USB " (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		mkdir %inputdirname:~0,2%\hakchi\transfer		
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		mkdir !inputdirname!\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+)
+echo [OK] - Installed !CustomContentBuild! Successfully!
+rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+set CUSTOM6=Y
+:Continue6
+if NOT DEFINED CUSTOM6 ( set CUSTOM6=N )
+echo.
+rem ============================================================================================
 rem ============================================================================================
 rem   _____ _    _  _____ _______ ____  __  __    _____ ____  _   _ _______ ______ _   _ _______ 
 rem  / ____| |  | |/ ____|__   __/ __ \|  \/  |  / ____/ __ \| \ | |__   __|  ____| \ | |__   __|
@@ -925,16 +1160,41 @@ rem | |____| |__| |____) |  | | | |__| | |  | | | |___| |__| | |\  |  | |  | |__
 rem  \_____|\____/|_____/   |_|  \____/|_|  |_|  \_____\____/|_| \_|  |_|  |______|_| \_|  |_|   
 rem ============================================================================================
 rem 									   FINISHES HERE 
-rem ============================================================================================                                                                                             
-echo Hakchi Options Menu by CompCom Installed      - !CUSTOM1!
-echo Hibernate Mod ^(Lite^) by Swingflip Installed - !CUSTOM2!
-
-:final
-echo Final guidance and details go here for the flashing kernel bit...
+rem ============================================================================================    
+cls
+echo.
+echo                            __ __     __       __   _ ___    _________
+echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
+echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
+echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                         ----------------------------------------------
+echo                                Easy Web Installer/Updater v1.0
+echo                         ----------------------------------------------
+echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
+echo                         ----------------------------------------------
+echo.                                                                           
+echo CUSTOM CONTENTINSTALLATION RESULTS:  
+echo.              
+echo Hakchi Options Menu by CompCom                   Installed - !CUSTOM1!
+echo Hibernate Mod ^(Lite^) by Swingflip              Installed - !CUSTOM2!
+echo Canoe Save Compression Mod ^(FAST^) by CompCom   Installed - !CUSTOM3!
+echo RetroArch 1.7.0 compiled by KMFDManic          Installed - !CUSTOM4!
+rem saving Custom 5 for essential cores for RetroArch
+echo Super Famicom English Translation by rhester72 Installed - !CUSTOM6!
+echo.
+echo.
+echo Latest Hakchi2ce installed and optional content installed. Press any key to continue to
+echo the last step regarding flashing the kernel and you are all good to go
 pause
 
 rem ============================================================================================
+:final
+echo.
+echo Final guidance and details go here for the flashing kernel bit...
+pause
+rem ============================================================================================
 
+rem remember to fix nand install location!
 rem #It's the end of the road for you dickhead...
 :exit
 echo.
