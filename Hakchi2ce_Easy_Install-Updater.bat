@@ -694,12 +694,12 @@ echo message doesn't really apply to you and you should probably try and work ou
 echo wrong and try not to cry... 
 echo.
 echo If you are happy it ran ok, you should consider looking at the optional modules available
-echo as they add extra awesome to your build. Do you want to check this out? (Y/N)
+echo as they add extra awesome to your build.
 :AskCustomContent
 set INPUT=
-set /P INPUT="Are you happy to proceed^? (Y/N)" !=!
+set /P INPUT="Do you want to check this out^? (Y/N)" !=!
 if /I "!INPUT!"=="y" goto screen8
-if /I "!INPUT!"=="n" goto final
+if /I "!INPUT!"=="n" goto AskHelp
 echo Incorrect input & goto AskCustomContent
 
 :screen8
@@ -1188,9 +1188,86 @@ echo the last step regarding flashing the kernel and you are all good to go
 pause
 
 rem ============================================================================================
-:final
+
+:AskHelp
+cls
+set INPUT=
+set /P INPUT="Do you need help on how to install/upgrade the custom kernel^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto HelpKernel
+if /I "!INPUT!"=="n" goto final
+echo Incorrect input & goto AskHelp
+rem ============================================================================================
+
+:HelpKernel
+cls
+set INPUT=
+set /P INPUT="Is your console already modified^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto HelpUpgrade
+if /I "!INPUT!"=="n" goto HelpNew
+echo Incorrect input & goto HelpKernel
+rem ============================================================================================
+
+:HelpUpgrade
+cls
+echo Plug your console to the PC with the USB cable.
+pause
 echo.
-echo Final guidance and details go here for the flashing kernel bit...
+echo Open Hakchi2 CE, select the Kernel menu and click "Uninstall".
+pause
+echo.
+echo If the driver is not already installed, click "Install driver".
+pause
+echo.
+echo Now hold the Reset button on your console and turn it ON,
+echo wait until the pop-up disappear before releasing the Reset button.
+pause
+echo.
+echo When the uninstall process is done Hakchi2 CE will ask if you want to flash
+echo the Original kernel, click No.
+pause
+echo.
+echo Now select the Kernel menu again and click "Flash custom kernel".
+pause
+echo.
+echo Turn OFF your console then hold the Reset button and turn it ON,
+echo wait until the pop-up disappear before releasing the Reset button.
+pause
+echo.
+echo Done, your console is now ready.
+pause
+goto final
+rem ============================================================================================
+
+:HelpNew
+cls
+echo Plug your console to the PC with the USB cable.
+pause
+echo.
+echo Open Hakchi2 CE, select the Kernel menu and click "Dump kernel".
+pause
+echo.
+echo If the driver is not already installed, click "Install driver".
+pause
+echo.
+echo Now hold the Reset button on your console and turn it ON,
+echo wait until the pop-up disappear before releasing the Reset button.
+pause
+echo.
+echo Now select the Kernel menu again and click "Flash custom kernel".
+pause
+echo.
+echo Turn OFF your console then hold the Reset button and turn it ON,
+echo wait until the pop-up disappear before releasing the Reset button.
+pause
+echo.
+echo Done, your console is now ready.
+pause
+goto final
+rem ============================================================================================
+
+:final
+cls
+echo Bla bla bla, final words, bla bla bla.
 pause
 rem ============================================================================================
 
