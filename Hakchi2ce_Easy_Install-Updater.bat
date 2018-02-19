@@ -5,9 +5,9 @@ color 0A
 
 rem Update these 3 variables if you intend to update the script...
 rem Note: Change this to auto fetch the latest build
-set HakchiBuild=hakchi2_CE_1.0.1
-set HakchiBuildURL=https://github.com/TeamShinkansen/hakchi2/releases/download/v1.0.1/hakchi2_CE_1.0.1.zip
-set HakchiBuildLastUpdated=6th Feburary 2018
+set HakchiBuild=hakchi2_CE_1.1.0
+set HakchiBuildURL=https://github.com/TeamShinkansen/hakchi2/releases/download/v1.1.0/hakchi2_CE_1.1.0.zip
+set HakchiBuildLastUpdated=19th Feburary 2018
 
 rem set "file=music.mp3"
 rem ( echo Set Sound = CreateObject("WMPlayer.OCX.7"^)
@@ -285,6 +285,7 @@ rem clean up any potential mistakes....
 set "inputnanddirname=!inputnanddirname:/=\!"
 set "inputnanddirname=!inputnanddirname:;=:!"
 )
+if "!inputdirname!" == "/=\" set "inputdirname=" && goto screen5
 goto screen6
 )
 if "!INSTALL_MODE!" == "INSTALL" (
@@ -329,6 +330,7 @@ set /P inputdirname= Please enter a valid directory:
 rem clean up any potential mistakes....
 set "inputdirname=!inputdirname:/=\!"
 set "inputdirname=!inputdirname:;=:!"
+if "!inputdirname!" == "/=\" set "inputdirname=" && goto screen5
 goto screen6
 )
 if "!HAKCHI_MODE!" == "USB " (
@@ -372,6 +374,7 @@ set /P inputdirname= Please enter a valid directory:
 rem clean up any potential mistakes....
 set "inputdirname=!inputdirname:/=\!"
 set "inputdirname=!inputdirname:;=:!"
+if "!inputdirname!" == "/=\" set "inputdirname=" && goto screen5
 goto screen6
 )
 )
@@ -547,29 +550,29 @@ if "!HAKCHI_MODE!" == "NAND" (
 rem ============================================================================================
 rem HAKCHI PACKAGE DOWNLOADER
 echo Downloading the latest Hakchi2 Community edition build...
-if exist !temp!\package.zip (
-del !temp!\package.zip
+if exist "!tmp!"\package.zip (
+del "!tmp!"\package.zip
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!HakchiBuildURL!', '!temp!\package.zip')"
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!HakchiBuildURL!', '"!tmp!"\package.zip')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download Hakchi from URL: !HakchiBuildURL!
 	pause
 	exit /b
 )
-if exist !temp!\package.zip ( echo [OK] - Downloaded successfully^! )
+if exist "!tmp!"\package.zip ( echo [OK] - Downloaded successfully^! )
 echo.
 
 echo Unzipping package...
-mkdir !tmp!\hakchi2ce
-powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\hakchi2ce'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+mkdir "!tmp!"\hakchi2ce
+powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\hakchi2ce'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download unzip downloaded package
-	del !temp!\package.zip
-	rmdir /S /Q !tmp!\hakchi2ce
+	del "!tmp!"\package.zip
+	rmdir /S /Q "!tmp!"\hakchi2ce
 	pause
 	exit /b
 )
-del !temp!\package.zip
+del "!tmp!"\package.zip
 echo [OK] - Unzipped succesfully!
 
 rem ============================================================================================
@@ -577,14 +580,14 @@ rem INSTALLER/UPDATE FOLDERS
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputnanddirname!
-		xcopy /s /y !temp!\hakchi2ce !inputnanddirname!
+		xcopy /s /y "!tmp!"\hakchi2ce !inputnanddirname!
 		if exist !inputnanddirname!\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
-			rem rmdir /S /Q !tmp!\hakchi2ce
+			rem rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist !inputnanddirname!\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
-			rmdir /S /Q !tmp!\hakchi2ce
+			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
 			exit /b
 		)
@@ -597,21 +600,21 @@ if "!HAKCHI_MODE!" == "NAND" (
 		xcopy /s /y !inputdirname!\art !inputnanddirname!\art
 		xcopy /s /y !inputdirname!\folder_images !inputnanddirname!\folder_images
 		xcopy /s /y !inputdirname!\user_mods !inputnanddirname!\user_mods
-		xcopy /s /y !tmp!\hakchi2ce\user_mods !inputnanddirname!\user_mods
+		xcopy /s /y "!tmp!"\hakchi2ce\user_mods !inputnanddirname!\user_mods
 		rem We need to set the flag to restore originals (this doesn't exist yet but it will)
 		echo [OK] - Copied old Hakchi2 files succesfully!
-		rmdir /S /Q !tmp!\hakchi2ce
+		rmdir /S /Q "!tmp!"\hakchi2ce
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!
-		xcopy /s !temp!\hakchi2ce !inputdirname!
+		xcopy /s "!tmp!"\hakchi2ce !inputdirname!
 		if exist !inputdirname!\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
-			rmdir /S /Q !tmp!\hakchi2ce
+			rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist !inputdirname!\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
-			rmdir /S /Q !tmp!\hakchi2ce
+			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
 			exit /b
 		)
@@ -620,14 +623,14 @@ if "!HAKCHI_MODE!" == "NAND" (
 if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: %inputdirname:~0,2%\data\hakchi2ce
-		xcopy /s /y !temp!\hakchi2ce %inputdirname:~0,2%\data\hakchi2ce
+		xcopy /s /y "!tmp!"\hakchi2ce %inputdirname:~0,2%\data\hakchi2ce
 		if exist %inputdirname:~0,2%\data\hakchi2ce\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
-			rem rmdir /S /Q !tmp!\hakchi2ce
+			rem rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist %inputdirname:~0,2%\data\hakchi2ce\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
-			rmdir /S /Q !tmp!\hakchi2ce
+			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
 			exit /b
 		)
@@ -640,21 +643,21 @@ if "!HAKCHI_MODE!" == "USB " (
 		xcopy /s /y !inputdirname!\art %inputdirname:~0,2%\data\hakchi2ce\art
 		xcopy /s /y !inputdirname!\folder_images %inputdirname:~0,2%\data\hakchi2ce\folder_images
 		xcopy /s /y !inputdirname!\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
-		xcopy /s /y !tmp!\hakchi2ce\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
+		xcopy /s /y "!tmp!"\hakchi2ce\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
 		rem We need to set the flag to restore originals (this doesn't exist yet but it will)
 		echo [OK] - Copied old Hakchi2 files succesfully!
-		rmdir /S /Q !tmp!\hakchi2ce
+		rmdir /S /Q "!tmp!"\hakchi2ce
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\data\hakchi2ce
-		xcopy /s !temp!\hakchi2ce !inputdirname!\data\hakchi2ce
+		xcopy /s "!tmp!"\hakchi2ce !inputdirname!\data\hakchi2ce
 		if exist !inputdirname!\data\hakchi2ce\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
-			rmdir /S /Q !tmp!\hakchi2ce
+			rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist !inputdirname!\data\hakchi2ce\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
-			rmdir /S /Q !tmp!\hakchi2ce
+			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
 			exit /b
 		)
@@ -694,10 +697,10 @@ echo message doesn't really apply to you and you should probably try and work ou
 echo wrong and try not to cry... 
 echo.
 echo If you are happy it ran ok, you should consider looking at the optional modules available
-echo as they add extra awesome to your build. Do you want to check this out? (Y/N)
+echo as they add extra awesome to your build.
 :AskCustomContent
 set INPUT=
-set /P INPUT="Are you happy to proceed^? (Y/N)" !=!
+set /P INPUT="Do you want to check this out^? (Y/N)" !=!
 if /I "!INPUT!"=="y" goto screen8
 if /I "!INPUT!"=="n" goto final
 echo Incorrect input & goto AskCustomContent
@@ -755,9 +758,9 @@ rem ============================================================================
 rem TODO: we could function'ise' a lot of this but every mod is slightly different so maybe it's 
 rem best to keep it like this so we can chop and swap stuff as and when we need to...
 echo.
-echo ----------------------------------------------
+echo --------------------------------------------------
 echo Hakchi Options Menu by CompCom
-echo ----------------------------------------------
+echo --------------------------------------------------
 echo This is a options pack which comes with a ton of functionality and useful tools for your
 echo Hakchi build. Not only does it contains such things as hmod manager it comes bundled with
 echo the hibernate mod which allows you to remotely hibernate your console.
@@ -773,39 +776,39 @@ set CustomContentBuildURL=XXXXX
 set CustomContentBuildLastUpdated=6th Feburary 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue1 )
-if exist !temp!\package.zip (
-del !temp!\package.zip
+if exist "!tmp!"\package.zip (
+del "!tmp!"\package.zip
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\package.zip')"
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\package.zip')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
 	exit /b
 )
-if exist !temp!\package.zip ( echo [OK] - Downloaded successfully^! )
+if exist "!tmp!"\package.zip ( echo [OK] - Downloaded successfully^! )
 echo.
 
 echo Unzipping package...
-mkdir !tmp!\!CustomContentBuild!
-powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+mkdir "!tmp!"\!CustomContentBuild!
+powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download unzip downloaded package
-	del !temp!\package.zip
-	rmdir /S /Q !tmp!\!CustomContentBuild!
+	del "!tmp!"\package.zip
+	rmdir /S /Q "!tmp!"\!CustomContentBuild!
 	pause
 	exit /b
 )
-del !temp!\package.zip
+del "!tmp!"\package.zip
 echo [OK] - Unzipped succesfully!
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y !temp!\!CustomContentBuild! !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild! !inputnanddirname!\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s !temp!\!CustomContentBuild! !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild! !inputdirname!\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -813,20 +816,20 @@ if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		mkdir %inputdirname:~0,2%\hakchi\transfer		
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s /y !temp!\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		mkdir !inputdirname!\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s !temp!\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q !tmp!\!CustomContentBuild!
+rmdir /S /Q "!tmp!"\!CustomContentBuild!
 set CUSTOM1=Y
 :Continue1
 if NOT DEFINED CUSTOM1 (set CUSTOM1=N)
@@ -835,9 +838,9 @@ rem ============================================================================
 rem don't install power mod if option mod installed as it conflicts. Actually, it doesn't... Just don't do it.
 if "!CUSTOM1!" == "N" (
 	echo.
-	echo ----------------------------------------------
+	echo --------------------------------------------------
 	echo Hibernate Mod ^(Lite^) by Swingflip
-	echo ----------------------------------------------
+	echo --------------------------------------------------
 	echo This is a mod which enables a power menu when you hold L ^+ R ^+ UP during gameplay
 	echo or when in the menus. You have an option to hibernate or put your console in to
 	echo standby just like if you were using the XBOX or Playstation. You can also remotely
@@ -854,40 +857,40 @@ if "!CUSTOM1!" == "N" (
 	set CustomContentBuildLastUpdated=6th Feburary 2018
 	echo Downloading the latest !CustomContentBuild! build...
 	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue2 )
-	if exist !temp!\!CustomContentBuild!.hmod (
-	del !temp!\!CustomContentBuild!.hmod
+	if exist "!tmp!"\!CustomContentBuild!.hmod (
+	del "!tmp!"\!CustomContentBuild!.hmod
 	)
-	powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+	powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 	if not %errorlevel%==0 (
 		echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 		pause
 		exit /b
 	)
-	if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+	if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
 	echo.
 
 	rem echo Unzipping package...
-	rem mkdir !tmp!\!CustomContentBuild!
-	rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+	rem mkdir "!tmp!"\!CustomContentBuild!
+	rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
 	rem if not %errorlevel%==0 (
 	rem 	echo [ERROR] - Couldn't download unzip downloaded package
-	rem 	del !temp!\package.zip
-	rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+	rem 	del "!tmp!"\package.zip
+	rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
 	rem 	pause
 	rem 	exit /b
 	rem )
-	rem del !temp!\package.zip
+	rem del "!tmp!"\package.zip
 	rem echo [OK] - Unzipped succesfully!
 	
 	rem We transfer directly into the hmod so they get installed during the kernel flash
 	if "!HAKCHI_MODE!" == "NAND" (
 		if "!INSTALL_MODE!" == "UPDATE " (
 			echo Copying files over to: !inputdirname!\mods\hmods
-			xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
 		)
 		if "!INSTALL_MODE!" == "INSTALL" (
 			echo Copying files over to: !inputdirname!\mods\hmods
-			xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
 		)
 	)
 	rem We transfer to the transfer folder as these should just install when run
@@ -895,20 +898,20 @@ if "!CUSTOM1!" == "N" (
 		if "!INSTALL_MODE!" == "UPDATE " (
 			mkdir %inputdirname:~0,2%\hakchi\transfer		
 			echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-			xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 			echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-			xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 		)
 		if "!INSTALL_MODE!" == "INSTALL" (
 			mkdir !inputdirname!\hakchi\transfer
 			echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-			xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 			echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-			xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 		)
 	)
 	echo [OK] - Installed !CustomContentBuild! Successfully!
-	rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+	rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 	set CUSTOM2=Y
 	:Continue2
 	if NOT DEFINED CUSTOM2 ( set CUSTOM2=N )
@@ -916,11 +919,11 @@ if "!CUSTOM1!" == "N" (
 )
 rem ============================================================================================
 echo.
-echo ----------------------------------------------
+echo --------------------------------------------------
 echo Canoe Save Compression Mod ^(FAST^) by CompCom
-echo ----------------------------------------------
-echo This mod compresses all canoe save states using 7zip. This turns canoe save states from
-echo 2mb to less than 300kb in most cases.
+echo --------------------------------------------------
+echo This mod compresses all canoe save states using 7zip. On average this turns canoe save
+echo states from 2mb to less than 300kb
 :AskCustomContent3
 set INPUT=
 set /P INPUT="Do you want to install Canoe Save Compression Mod^? (Y/N)" !=!
@@ -933,40 +936,40 @@ set CustomContentBuildURL=https://github.com/CompCom/hmrepo/raw/master/canoe_sav
 set CustomContentBuildLastUpdated=9th Feburary 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue3 )
-if exist !temp!\!CustomContentBuild!.hmod (
-del !temp!\!CustomContentBuild!.hmod
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
 	exit /b
 )
-if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
 echo.
 
 rem echo Unzipping package...
-rem mkdir !tmp!\!CustomContentBuild!
-rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem mkdir "!tmp!"\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
 rem if not %errorlevel%==0 (
 rem 	echo [ERROR] - Couldn't download unzip downloaded package
-rem 	del !temp!\package.zip
-rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+rem 	del "!tmp!"\package.zip
+rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
 rem 	pause
 rem 	exit /b
 rem )
-rem del !temp!\package.zip
+rem del "!tmp!"\package.zip
 rem echo [OK] - Unzipped succesfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -974,29 +977,29 @@ if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		mkdir %inputdirname:~0,2%\hakchi\transfer		
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		mkdir !inputdirname!\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM3=Y
 :Continue3
 if NOT DEFINED CUSTOM3 ( set CUSTOM3=N )
 echo.
 rem ============================================================================================
 echo.
-echo ----------------------------------------------
-echo RetroArch 1.7.0 compiled by KMFDManic
-echo ----------------------------------------------
+echo --------------------------------------------------
+echo RetroArch 'Neo' 1.7.0 compiled by 'The Other Guys'
+echo --------------------------------------------------
 echo Retroarch is the core application for your emulation needs. You will need RetroArch if you
 echo intend on using any emulator on the system that isn't the default built in one. This
 echo retroarch is set up specificly to work with the current release of Hakchi2ce
@@ -1007,45 +1010,45 @@ if /I "!INPUT!"=="y" goto InstallCustomContent4
 if /I "!INPUT!"=="n" goto Continue4
 echo Incorrect input & goto AskCustomContent4
 :InstallCustomContent4
-set CustomContentBuild=RetroArch_v1_7_0
-set CustomContentBuildURL=https://github.com/KMFDManic/NESC-SNESC-Modifications/releases/download/v.2.5-2018-CE/_km_retroarch_170.hmod
-set CustomContentBuildLastUpdated=9th Feburary 2018
+set CustomContentBuild=RetroArch_Neo_v1_7_0b
+set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi-Retroarch-Neo-1.7.0/releases/download/Release_Candidate_b/Hakchi_Retroarch_Neo_v1_7_0b.hmod
+set CustomContentBuildLastUpdated=19th Feburary 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue4 )
-if exist !temp!\!CustomContentBuild!.hmod (
-del !temp!\!CustomContentBuild!.hmod
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
 	exit /b
 )
-if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
 echo.
 
 rem echo Unzipping package...
-rem mkdir !tmp!\!CustomContentBuild!
-rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem mkdir "!tmp!"\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
 rem if not %errorlevel%==0 (
 rem 	echo [ERROR] - Couldn't download unzip downloaded package
-rem 	del !temp!\package.zip
-rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+rem 	del "!tmp!"\package.zip
+rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
 rem 	pause
 rem 	exit /b
 rem )
-rem del !temp!\package.zip
+rem del "!tmp!"\package.zip
 rem echo [OK] - Unzipped succesfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -1053,29 +1056,29 @@ if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		mkdir %inputdirname:~0,2%\hakchi\transfer		
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		mkdir !inputdirname!\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM4=Y
 :Continue4
 if NOT DEFINED CUSTOM4 ( set CUSTOM4=N )
 echo.
 rem ============================================================================================
 echo.
-echo ----------------------------------------------
+echo --------------------------------------------------
 echo Super Famicom English Translation by rhester72
-echo ----------------------------------------------
+echo --------------------------------------------------
 echo This is a mod which will translate the Super famicom menu into english. Obviously this is
 echo only required if you have a Super Famicom and want it translated into english...
 echo I highly recommended NOT installing this on anything but a Super Famicom...
@@ -1091,40 +1094,40 @@ set CustomContentBuildURL=http://www.rendezvo.us/snes/sfc_eng_menu_hack-0.4.hmod
 set CustomContentBuildLastUpdated=9th Feburary 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
-if exist !temp!\!CustomContentBuild!.hmod (
-del !temp!\!CustomContentBuild!.hmod
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '!temp!\!CustomContentBuild!.hmod')"
+powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
 	exit /b
 )
-if exist !temp!\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
 echo.
 
 rem echo Unzipping package...
-rem mkdir !tmp!\!CustomContentBuild!
-rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('!temp!\!CustomContentBuild!'); $zip = $shell.NameSpace('!temp!\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem mkdir "!tmp!"\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
 rem if not %errorlevel%==0 (
 rem 	echo [ERROR] - Couldn't download unzip downloaded package
-rem 	del !temp!\package.zip
-rem 	rmdir /S /Q !tmp!\!CustomContentBuild!
+rem 	del "!tmp!"\package.zip
+rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
 rem 	pause
 rem 	exit /b
 rem )
-rem del !temp!\package.zip
+rem del "!tmp!"\package.zip
 rem echo [OK] - Unzipped succesfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y !temp!\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s !temp!\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -1132,20 +1135,20 @@ if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		mkdir %inputdirname:~0,2%\hakchi\transfer		
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s /y !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		mkdir !inputdirname!\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s !temp!\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q !tmp!\!CustomContentBuild!.hmod
+rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM6=Y
 :Continue6
 if NOT DEFINED CUSTOM6 ( set CUSTOM6=N )
