@@ -1176,24 +1176,22 @@ echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
 echo.                                                                           
-echo CUSTOM CONTENTINSTALLATION RESULTS:  
+echo CUSTOM CONTENT INSTALLATION RESULTS:  
 echo.              
-echo Hakchi Options Menu by CompCom                   Installed - !CUSTOM1!
-echo Hibernate Mod ^(Lite^) by Swingflip              Installed - !CUSTOM2!
-echo Canoe Save Compression Mod ^(FAST^) by CompCom   Installed - !CUSTOM3!
-echo RetroArch 1.7.0 compiled by KMFDManic          Installed - !CUSTOM4!
+echo Hakchi Options Menu by CompCom                     Installed - !CUSTOM1!
+echo Hibernate Mod ^(Lite^) by Swingflip                  Installed - !CUSTOM2!
+echo Canoe Save Compression Mod ^(FAST^) by CompCom       Installed - !CUSTOM3!
+echo RetroArch 'Neo' 1.7.0 compiled by 'The Other Guys' Installed - !CUSTOM4!
 rem saving Custom 5 for essential cores for RetroArch
-echo Super Famicom English Translation by rhester72 Installed - !CUSTOM6!
+echo Super Famicom English Translation by rhester72     Installed - !CUSTOM6!
 echo.
+echo Latest Hakchi2ce installed and optional content installed succesfully!
+echo You just need to flash the custom kernel to the console...
 echo.
-echo Latest Hakchi2ce installed and optional content installed. Press any key to continue to
-echo the last step regarding flashing the kernel and you are all good to go
-pause
 
 rem ============================================================================================
 
 :AskHelp
-cls
 set INPUT=
 set /P INPUT="Do you need help on how to install/upgrade the custom kernel^? (Y/N)" !=!
 if /I "!INPUT!"=="y" goto HelpKernel
@@ -1270,7 +1268,28 @@ rem ============================================================================
 
 :final
 cls
-echo Bla bla bla, final words, bla bla bla.
+echo.
+echo                            __ __     __       __   _ ___    _________
+echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
+echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
+echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                         ----------------------------------------------
+echo                                Easy Web Installer/Updater v1.0
+echo                         ----------------------------------------------
+echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
+echo                         ----------------------------------------------
+echo.
+echo Ok, you should be ready to go! If you have any issues or require any help you can find us 
+echo at the reddit group 'miniSNESmods' @ https://www.reddit.com/r/miniSNESmods/
+echo.
+echo This release was brought you by 'The Other Guys' 
+echo https://github.com/TheOtherGuys-Hakchi-Projects
+echo. 
+echo Credits: Swingflip, CompCom, DNA64, Bslenul, Defkorns 
+echo Shout Outs: TeamShinkansen for Hakchi2ce and KMFDManic for his work on RA and cores
+echo Special thanks to the guys who helped test the project and support us developing.
+echo.
+echo.
 pause
 rem ============================================================================================
 
