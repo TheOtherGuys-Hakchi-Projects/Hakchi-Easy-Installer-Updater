@@ -553,7 +553,7 @@ echo Downloading the latest Hakchi2 Community edition build...
 if exist "!tmp!"\package.zip (
 del "!tmp!"\package.zip
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!HakchiBuildURL!', '"!tmp!"\package.zip')"
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!HakchiBuildURL!', '"!tmp!"\package.zip')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download Hakchi from URL: !HakchiBuildURL!
 	pause
@@ -779,7 +779,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\package.zip (
 del "!tmp!"\package.zip
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\package.zip')"
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\package.zip')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
@@ -860,7 +860,7 @@ if "!CUSTOM1!" == "N" (
 	if exist "!tmp!"\!CustomContentBuild!.hmod (
 	del "!tmp!"\!CustomContentBuild!.hmod
 	)
-	powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+	powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 	if not %errorlevel%==0 (
 		echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 		pause
@@ -939,7 +939,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
@@ -1018,7 +1018,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
@@ -1097,7 +1097,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "(New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
