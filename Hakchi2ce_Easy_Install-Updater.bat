@@ -1413,10 +1413,17 @@ echo.
 echo Open Hakchi2 CE, select the Kernel menu and click "Uninstall".
 pause
 echo.
+echo If you get a "No kernel dump found." error, please copy your original
+echo kernel (kernel.img for NES, kernel_snes.img for SNES) to the "\dump"
+echo folder and try again. If you don't have your original file for some reason,
+echo try to find one online matching your console and region.
+pause
+echo.
 echo If the driver is not already installed, click "Install driver".
 pause
 echo.
-echo Now hold the Reset button on your console and turn it ON,
+echo Follow the instructions on the "Waiting for your NES/SNES Mini..." pop-up:
+echo hold the Reset button on your console and turn it ON,
 echo wait until the pop-up disappear before releasing the Reset button.
 pause
 echo.
@@ -1447,7 +1454,8 @@ echo.
 echo If the driver is not already installed, click "Install driver".
 pause
 echo.
-echo Now hold the Reset button on your console and turn it ON,
+echo Follow the instructions on the "Waiting for your NES/SNES Mini..." pop-up:
+echo hold the Reset button on your console and turn it ON,
 echo wait until the pop-up disappear before releasing the Reset button.
 pause
 echo.
@@ -1482,7 +1490,7 @@ echo.
 echo This release was brought you by 'The Other Guys' 
 echo https://github.com/TheOtherGuys-Hakchi-Projects
 echo. 
-echo Credits: Swingflip, CompCom, DNA64, Bslenul, Defkorns 
+echo Credits: Swingflip, CompCom, DNA64, bslenul, Defkorns 
 echo Shout Outs: TeamShinkansen for Hakchi2ce and KMFDManic for his work on RA and cores
 echo Special thanks to the guys who helped test the project and support us developing.
 echo.
