@@ -1411,12 +1411,11 @@ echo Plug your console to the PC with the USB cable.
 pause
 echo.
 echo Open Hakchi2 CE, select the Kernel menu and click "Uninstall".
-pause
 echo.
-echo If you get a "No kernel dump found." error, please copy your original
+echo **NOTE** If you get a "No kernel dump found." error, please copy your original
 echo kernel (kernel.img for NES, kernel_snes.img for SNES) to the "\dump"
-echo folder and try again. If you don't have your original file for some reason,
-echo try to find one online matching your console and region.
+echo folder in the new hakchi2ce folder and try again. If you don't have your original file
+echo for some reason, try to find one online matching your console and region.
 pause
 echo.
 echo If the driver is not already installed, click "Install driver".
