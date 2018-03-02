@@ -771,44 +771,45 @@ if /I "!INPUT!"=="y" goto InstallCustomContent1
 if /I "!INPUT!"=="n" goto Continue1
 echo Incorrect input & goto AskCustomContent1
 :InstallCustomContent1
-set CustomContentBuild=XXXXX
-set CustomContentBuildURL=XXXXX
-set CustomContentBuildLastUpdated=6th Feburary 2018
+set CustomContentBuild=Options_Deluxe_v1_0_0
+set CustomContentBuildURL=https://github.com/CompCom/OptionsMenu/releases/download/v1.0/options_deluxe_v1_0_0.hmod
+set CustomContentBuildLastUpdated=2nd March 2018
 echo Downloading the latest !CustomContentBuild! build...
-if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue1 )
-if exist "!tmp!"\package.zip (
-del "!tmp!"\package.zip
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue2 )
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
 )
-powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\package.zip')"
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
 	pause
 	exit /b
 )
-if exist "!tmp!"\package.zip ( echo [OK] - Downloaded successfully^! )
+if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
 echo.
 
-echo Unzipping package...
-mkdir "!tmp!"\!CustomContentBuild!
-powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
-if not %errorlevel%==0 (
-	echo [ERROR] - Couldn't download unzip downloaded package
-	del "!tmp!"\package.zip
-	rmdir /S /Q "!tmp!"\!CustomContentBuild!
-	pause
-	exit /b
-)
-del "!tmp!"\package.zip
-echo [OK] - Unzipped succesfully!
+rem echo Unzipping package...
+rem mkdir "!tmp!"\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem if not %errorlevel%==0 (
+rem 	echo [ERROR] - Couldn't download unzip downloaded package
+rem 	del "!tmp!"\package.zip
+rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
+rem 	pause
+rem 	exit /b
+rem )
+rem del "!tmp!"\package.zip
+rem echo [OK] - Unzipped succesfully!
+
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild! !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild! !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -816,21 +817,22 @@ if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		mkdir %inputdirname:~0,2%\hakchi\transfer		
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s /y "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		mkdir !inputdirname!\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
 		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q "!tmp!"\!CustomContentBuild!
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM1=Y
+set CUSTOM2=N/A
 :Continue1
 if NOT DEFINED CUSTOM1 (set CUSTOM1=N)
 echo.
@@ -911,7 +913,7 @@ if "!CUSTOM1!" == "N" (
 		)
 	)
 	echo [OK] - Installed !CustomContentBuild! Successfully!
-	rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+	rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 	set CUSTOM2=Y
 	:Continue2
 	if NOT DEFINED CUSTOM2 ( set CUSTOM2=N )
@@ -990,7 +992,7 @@ if "!HAKCHI_MODE!" == "USB " (
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM3=Y
 :Continue3
 if NOT DEFINED CUSTOM3 ( set CUSTOM3=N )
@@ -1069,11 +1071,170 @@ if "!HAKCHI_MODE!" == "USB " (
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM4=Y
 :Continue4
 if NOT DEFINED CUSTOM4 ( set CUSTOM4=N )
 echo.
+rem ============================================================================================
+echo.
+echo --------------------------------------------------
+echo Hakchi Video Splash Screen Mod by 'The Other Guys'
+echo --------------------------------------------------
+echo It's an awesome Hakchi2 module (HMOD) which adds a video splash screen to your Nintendo
+echo SNES and NES Classic console. It currently supports up-to 480p video and now supports
+echo audio as well!
+:AskCustomContent6
+set INPUT=
+set /P INPUT="Do you want to install the Hakchi Video Splash Screen Mod^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto InstallCustomContent6
+if /I "!INPUT!"=="n" goto Continue6
+echo Incorrect input & goto AskCustomContent6
+:InstallCustomContent6
+set CustomContentBuild=Hakchi_Video_Splash_Screen_v1_1
+set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi_Video_Splash_Screen/releases/download/Video_Splash_v1_video_1/Hakchi_Video_Splash_1.hmod
+set CustomContentBuildLastUpdated=2nd March 2018
+echo Downloading the latest !CustomContentBuild! build...
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
+)
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+if not %errorlevel%==0 (
+	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+	pause
+	exit /b
+)
+if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+echo.
+
+rem echo Unzipping package...
+rem mkdir "!tmp!"\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem if not %errorlevel%==0 (
+rem 	echo [ERROR] - Couldn't download unzip downloaded package
+rem 	del "!tmp!"\package.zip
+rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
+rem 	pause
+rem 	exit /b
+rem )
+rem del "!tmp!"\package.zip
+rem echo [OK] - Unzipped succesfully!
+
+rem We transfer directly into the hmod so they get installed during the kernel flash
+if "!HAKCHI_MODE!" == "NAND" (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+	)
+)
+rem We transfer to the transfer folder as these should just install when run
+if "!HAKCHI_MODE!" == "USB " (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		mkdir %inputdirname:~0,2%\hakchi\transfer		
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		mkdir !inputdirname!\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+)
+echo [OK] - Installed !CustomContentBuild! Successfully!
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+set CUSTOM6=Y
+:Continue6
+if NOT DEFINED CUSTOM6 ( set CUSTOM6=N )
+echo.
+rem ============================================================================================
+if "!HAKCHI_MODE!" == "USB " (
+	echo.
+	echo --------------------------------------------------
+	echo Hakchi Advanced Music Hack by Swingflip
+	echo --------------------------------------------------
+	echo This module will disable NES/SNES Mini's default menu music and randomly play as much
+	echo custom music you want, located on your external USB/SD drive...
+	:AskCustomContent7
+	set INPUT=
+	set /P INPUT="Do you want to install the Hakchi Video Splash Screen Mod^? (Y/N)" !=!
+	if /I "!INPUT!"=="y" goto InstallCustomContent7
+	if /I "!INPUT!"=="n" goto Continue7
+	echo Incorrect input & goto AskCustomContent7
+	:InstallCustomContent7
+	set CustomContentBuild=Hakchi_Advanced_Music_Hack_v1_0
+	set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi_Advanced_Music_Hack/releases/download/v1_0_0/Hakchi_Advanced_Music_Hack.hmod
+	set CustomContentBuildLastUpdated=2nd March 2018
+	echo Downloading the latest !CustomContentBuild! build...
+	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
+	if exist "!tmp!"\!CustomContentBuild!.hmod (
+	del "!tmp!"\!CustomContentBuild!.hmod
+	)
+	powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+	if not %errorlevel%==0 (
+		echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+		pause
+		exit /b
+	)
+	if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+	echo.
+
+	rem echo Unzipping package...
+	rem mkdir "!tmp!"\!CustomContentBuild!
+	rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+	rem if not %errorlevel%==0 (
+	rem 	echo [ERROR] - Couldn't download unzip downloaded package
+	rem 	del "!tmp!"\package.zip
+	rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
+	rem 	pause
+	rem 	exit /b
+	rem )
+	rem del "!tmp!"\package.zip
+	rem echo [OK] - Unzipped succesfully!
+
+	rem We transfer directly into the hmod so they get installed during the kernel flash
+	if "!HAKCHI_MODE!" == "NAND" (
+		if "!INSTALL_MODE!" == "UPDATE " (
+			echo Copying files over to: !inputdirname!\mods\hmods
+			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		)
+		if "!INSTALL_MODE!" == "INSTALL" (
+			echo Copying files over to: !inputdirname!\mods\hmods
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		)
+	)
+	rem We transfer to the transfer folder as these should just install when run
+	if "!HAKCHI_MODE!" == "USB " (
+		if "!INSTALL_MODE!" == "UPDATE " (
+			mkdir %inputdirname:~0,2%\hakchi\transfer		
+			echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+			echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		)
+		if "!INSTALL_MODE!" == "INSTALL" (
+			mkdir !inputdirname!\hakchi\transfer
+			echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+			echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+		)
+	)
+	echo [OK] - Installed !CustomContentBuild! Successfully!
+	rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+	set CUSTOM7=Y
+	:Continue7
+	if NOT DEFINED CUSTOM7 ( set CUSTOM7=N )
+	echo.
+)
 rem ============================================================================================
 echo.
 echo --------------------------------------------------
@@ -1082,13 +1243,13 @@ echo --------------------------------------------------
 echo This is a mod which will translate the Super famicom menu into english. Obviously this is
 echo only required if you have a Super Famicom and want it translated into english...
 echo I highly recommended NOT installing this on anything but a Super Famicom...
-:AskCustomContent6
+:AskCustomContent8
 set INPUT=
 set /P INPUT="Do you want to install Super Famicom Translation^? (Y/N)" !=!
-if /I "!INPUT!"=="y" goto InstallCustomContent6
-if /I "!INPUT!"=="n" goto Continue6
-echo Incorrect input & goto AskCustomContent6
-:InstallCustomContent6
+if /I "!INPUT!"=="y" goto InstallCustomContent8
+if /I "!INPUT!"=="n" goto Continue8
+echo Incorrect input & goto AskCustomContent8
+:InstallCustomContent8
 set CustomContentBuild=sfc_eng_menu_hack_v0_4
 set CustomContentBuildURL=http://www.rendezvo.us/snes/sfc_eng_menu_hack-0.4.hmod
 set CustomContentBuildLastUpdated=9th Feburary 2018
@@ -1148,10 +1309,10 @@ if "!HAKCHI_MODE!" == "USB " (
 	)
 )
 echo [OK] - Installed !CustomContentBuild! Successfully!
-rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
-set CUSTOM6=Y
-:Continue6
-if NOT DEFINED CUSTOM6 ( set CUSTOM6=N )
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+set CUSTOM8=Y
+:Continue8
+if NOT DEFINED CUSTOM8 ( set CUSTOM8=N )
 echo.
 rem ============================================================================================
 rem ============================================================================================
@@ -1183,7 +1344,9 @@ echo Hibernate Mod ^(Lite^) by Swingflip                  Installed - !CUSTOM2!
 echo Canoe Save Compression Mod ^(FAST^) by CompCom       Installed - !CUSTOM3!
 echo RetroArch 'Neo' 1.7.0 compiled by 'The Other Guys' Installed - !CUSTOM4!
 rem saving Custom 5 for essential cores for RetroArch
-echo Super Famicom English Translation by rhester72     Installed - !CUSTOM6!
+echo Hakchi Video Splash Screen Mod by 'The Other Guys' Installed - !CUSTOM6!
+echo Hakchi Advanced Music Hack by Swingflip (USB ONLY) Installed - !CUSTOM7!
+echo Super Famicom English Translation by rhester72     Installed - !CUSTOM8!
 echo.
 echo Latest Hakchi2ce installed and optional content installed succesfully!
 echo You just need to flash the custom kernel to the console...
