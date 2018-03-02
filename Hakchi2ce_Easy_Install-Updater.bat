@@ -594,16 +594,33 @@ if "!HAKCHI_MODE!" == "NAND" (
 		echo Copying old Hakchi2 files over to new build...
 		echo If you are asked if something is a file or directory, type D for directory...
 		pause
-		xcopy /s /y !inputdirname!\games !inputnanddirname!\games
-		xcopy /s /y !inputdirname!\games_snes !inputnanddirname!\games_snes
+		if not exist !inputdirname!\games mkdir !inputdirname!\games
+		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
+		move /Y !inputdirname!\games !inputnanddirname!\games
+		move /Y !inputdirname!\games_snes !inputnanddirname!\games_snes
+		if not exist !inputdirname!\games mkdir !inputdirname!\games
+		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
+		xcopy /s /y !inputdirname!\games_cache !inputnanddirname!\games_cache
+		xcopy /s /y !inputdirname!\games_originals !inputnanddirname!\games_originals
 		xcopy /s /y !inputdirname!\config !inputnanddirname!\config
+		xcopy /s /y !inputdirname!\dump !inputnanddirname!\dump
 		xcopy /s /y !inputdirname!\art !inputnanddirname!\art
 		xcopy /s /y !inputdirname!\folder_images !inputnanddirname!\folder_images
 		xcopy /s /y !inputdirname!\user_mods !inputnanddirname!\user_mods
 		xcopy /s /y "!tmp!"\hakchi2ce\user_mods !inputnanddirname!\user_mods
-		rem We need to set the flag to restore originals (this doesn't exist yet but it will)
 		echo [OK] - Copied old Hakchi2 files succesfully!
 		rmdir /S /Q "!tmp!"\hakchi2ce
+		rem set file=!inputnanddirname!\config\config.ini
+		rem echo Fixing up config...
+		rem Set initial boot to zero
+		rem :loop
+		rem 	findstr "^RunCount=0$" "%file%" >nul || (
+		rem 		type "%file%"|repl "^RunCount=.*" "RunCount=0" >"%file%.tmp"
+		rem 		move "%file%.tmp" "%file%" >nul
+		rem 	)
+		rem 	ping -n 120 localhost >nul
+		rem goto :loop
+		rem echo [OK] - Fixed up config succesfully!
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!
@@ -637,16 +654,33 @@ if "!HAKCHI_MODE!" == "USB " (
 		echo Copying old Hakchi2 files over to new build...
 		echo If you are asked if something is a file or directory, type D for directory...
 		pause
-		xcopy /s /y !inputdirname!\games %inputdirname:~0,2%\data\hakchi2ce\games
-		xcopy /s /y !inputdirname!\games_snes %inputdirname:~0,2%\data\hakchi2ce\games_snes
+		if not exist !inputdirname!\games mkdir !inputdirname!\games
+		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
+		move /Y !inputdirname!\games %inputdirname:~0,2%\data\hakchi2ce\games
+		move /Y !inputdirname!\games_snes %inputdirname:~0,2%\data\hakchi2ce\games_snes
+		if not exist !inputdirname!\games mkdir !inputdirname!\games
+		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
+		xcopy /s /y !inputdirname!\games_cache %inputdirname:~0,2%\data\hakchi2ce\games_cache
+		xcopy /s /y !inputdirname!\games_originals %inputdirname:~0,2%\data\hakchi2ce\games_originals
 		xcopy /s /y !inputdirname!\config %inputdirname:~0,2%\data\hakchi2ce\config
+		xcopy /s /y !inputdirname!\dump !inputnanddirname!\dump
 		xcopy /s /y !inputdirname!\art %inputdirname:~0,2%\data\hakchi2ce\art
 		xcopy /s /y !inputdirname!\folder_images %inputdirname:~0,2%\data\hakchi2ce\folder_images
 		xcopy /s /y !inputdirname!\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
 		xcopy /s /y "!tmp!"\hakchi2ce\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
-		rem We need to set the flag to restore originals (this doesn't exist yet but it will)
 		echo [OK] - Copied old Hakchi2 files succesfully!
 		rmdir /S /Q "!tmp!"\hakchi2ce
+		rem set file=%inputdirname:~0,2%\data\hakchi2ce\config\config.ini
+		rem echo Fixing up config...
+		rem Set initial boot to zero
+		rem :loop
+		rem 	findstr "^RunCount=0$" "%file%" >nul || (
+		rem 		type "%file%"|repl "^RunCount=.*" "RunCount=0" >"%file%.tmp"
+		rem 		move "%file%.tmp" "%file%" >nul
+		rem 	)
+		rem 	ping -n 120 localhost >nul
+		rem goto :loop
+		rem echo [OK] - Fixed up config succesfully!
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\data\hakchi2ce
@@ -1012,8 +1046,8 @@ if /I "!INPUT!"=="y" goto InstallCustomContent4
 if /I "!INPUT!"=="n" goto Continue4
 echo Incorrect input & goto AskCustomContent4
 :InstallCustomContent4
-set CustomContentBuild=RetroArch_Neo_v1_7_0b
-set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi-Retroarch-Neo-1.7.0/releases/download/Release_Candidate_b/Hakchi_Retroarch_Neo_v1_7_0b.hmod
+set CustomContentBuild=RetroArch_Neo_v1_7_0c
+set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi-Retroarch-Neo-1.7.0/releases/download/Release_Candidate_c/Hakchi_Retroarch_Neo_v1_7_0c.hmod
 set CustomContentBuildLastUpdated=19th Feburary 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue4 )
