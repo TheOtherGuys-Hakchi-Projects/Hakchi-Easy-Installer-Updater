@@ -9,16 +9,6 @@ set HakchiBuild=hakchi2_CE_1.1.0
 set HakchiBuildURL=https://github.com/TeamShinkansen/hakchi2/releases/download/v1.1.0/hakchi2_CE_1.1.0.zip
 set HakchiBuildLastUpdated=19th Feburary 2018
 
-rem set "file=music.mp3"
-rem ( echo Set Sound = CreateObject("WMPlayer.OCX.7"^)
-rem   echo Sound.URL = "%file%"
-rem   echo Sound.Controls.play
-rem   echo do while Sound.currentmedia.duration = 0
-rem   echo wscript.sleep 100
-rem   echo loop
-rem   echo wscript.sleep (int(Sound.currentmedia.duration^)+1^)*1000) >sound.vbs
-rem start /min sound.vbs
-
 rem ============================================================================================
 rem SCREEN 1 - Welcome screen...
 rem ============================================================================================
@@ -62,7 +52,7 @@ rem ============================================================================
 
 
 rem ============================================================================================
-rem SCREEN 2 - Info screen...
+rem SCREEN 2a - Info screen...
 rem ============================================================================================
 echo.
 echo                            __ __     __       __   _ ___    _________
@@ -102,6 +92,48 @@ echo.
 pause
 rem ============================================================================================
 
+
+rem ============================================================================================
+rem SCREEN 2b - Disclaimer...
+rem ============================================================================================
+echo.
+echo                            __ __     __       __   _ ___    _________
+echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
+echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
+echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                         ----------------------------------------------
+echo                                Easy Web Installer/Updater v1.0
+echo                         ----------------------------------------------
+echo.
+echo.
+echo                                 ** DISCLAIMER / LEGAL STUFF **
+echo.
+echo.
+echo  We do not accept any responsibility for any damage made to your console whilst using  
+echo  this app, Hakchi2ce or any of the optional mods bundled with this app.
+echo.
+echo  It should also be noted that you CAN NOT brick your console using this app as there
+echo  has yet to be a case of a bricked console using this software.
+echo.
+echo  It is strongly recommended you keep your stock kernel image safe if you have it. If 
+echo  you are installing from fresh. You will have an opputunity to dump this later. 
+echo  KEEP THIS SAFE! 
+echo.
+echo  If in the future you lose your stock kernel. You can find the stock kernel online using
+echo  google. We will NOT link to any Nintendo copyrighted materials.
+echo.
+echo  If you encounter any issues at any point, you can flash the standard kernel and go back
+echo  to factory defaults.
+echo.
+echo  Lastly this software and the rest of the software bundled with this app is NOT for 
+echo  commercial use. IT IS AND WILL ALWAYS BE FREE TO USE.
+echo.
+echo  You have been warned and you proceed at your own risk.
+echo.                                              
+echo.
+pause
+rem ============================================================================================
+
 rem lets do this shit...
 
 :screen3
@@ -127,7 +159,7 @@ echo                         ^|                Question 01                 ^|
 echo                         ----------------------------------------------
 echo                         ^| Do you wish to use Hakchi CE in NAND mode  ^|
 echo                         ^| or USB-HOST mode?                          ^|
-echo                         ^| (USB-HOST mode uses external USB storage)  ^|
+echo                         ^| (USB-HOST mode uses external storage)      ^|
 echo                         ^| Type N for NAND or U for USB-HOST          ^|
 echo                         ----------------------------------------------
 echo.
@@ -382,7 +414,48 @@ rem ============================================================================
 
 :screen6
 rem ============================================================================================
-rem SCREEN 6 - Confirmation...
+rem SCREEN 6a - Update warning...
+rem ============================================================================================
+if "!INSTALL_MODE!" == "UPDATE " (
+echo.
+echo                            __ __     __       __   _ ___    _________
+echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
+echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
+echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                         ----------------------------------------------
+echo                                Easy Web Installer/Updater v1.0
+echo                         ----------------------------------------------
+echo.
+echo.
+echo                               ** UPDATE WARNING / INFORMATION ** 
+echo.
+echo.
+echo  We attempt to account for every possible permutation of set up / issues that people have.
+echo  However there will be a small amount of people who have issues using the updater.
+echo.
+echo  If you are not bothered about your previous set up, games etc. We always recommend you
+echo  uninstall the custom kernel and flash your stock kernel using any hakchi GUI and run an
+echo  install instead of an update using this app.
+echo.
+echo  95% of the time the update routine will run fine however, if you find yourself having
+echo  issues with your console. Make a backup, uninstall the custom kernel and flash your    
+echo  stock kernel back to the console using Hakchi.
+echo.
+echo  If you do not have your stock kernel any more you can find them online using google.
+echo.
+echo  REMEMBER don't panic! You can not brick or damage your console using Hakchi2ce however
+echo  you do take responsibility for modding your own console obviously as we certainly don't!
+echo.
+echo.
+echo.
+echo.
+echo.
+echo.                                              
+echo.
+pause
+)
+rem ============================================================================================
+rem SCREEN 6b - Confirmation...
 rem ============================================================================================
 echo.
 echo                            __ __     __       __   _ ___    _________
