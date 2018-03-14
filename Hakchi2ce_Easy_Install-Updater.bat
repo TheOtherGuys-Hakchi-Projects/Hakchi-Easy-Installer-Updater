@@ -1,13 +1,28 @@
-@echo off
+@if (@CodeSection == @Batch) @then
+@ECHO OFF
+REM BFCPEOPTIONSTART
+REM Advanced BAT to EXE Converter www.BatToExeConverter.com
+REM BFCPEEXE=D:\Users\Ryan\Desktop\Easy Hakchi2ce Set Up.exe
+REM BFCPEICON=C:\Program Files (x86)\Advanced BAT to EXE Converter v4.11\ab2econv411\icons\icon6.ico
+REM BFCPEICONINDEX=-1
+REM BFCPEEMBEDDISPLAY=0
+REM BFCPEEMBEDDELETE=1
+REM BFCPEADMINEXE=1
+REM BFCPEINVISEXE=0
+REM BFCPEVERINCLUDE=1
+REM BFCPEVERVERSION=1.0.0.0
+REM BFCPEVERPRODUCT=Easy Hakchi2ce Web Installer/Updater
+REM BFCPEVERDESC=Hakchi2ce Updater / Installer
+REM BFCPEVERCOMPANY='The Other Guys'
+REM BFCPEVERCOPYRIGHT='The Other Guys' 2018
+REM BFCPEOPTIONEND
 mode con: cols=92 lines=35
 setlocal enabledelayedexpansion
 color 0A
 
-rem Update these 3 variables if you intend to update the script...
-rem Note: Change this to auto fetch the latest build
-set HakchiBuild=hakchi2_CE_1.1.0
-set HakchiBuildURL=https://github.com/TeamShinkansen/hakchi2/releases/download/v1.1.0/hakchi2_CE_1.1.0.zip
-set HakchiBuildLastUpdated=19th Feburary 2018
+rem Initialise Module...
+goto initialise
+:finish_initialise
 
 rem ============================================================================================
 rem SCREEN 1 - Welcome screen...
@@ -252,8 +267,8 @@ echo.
 echo                         ----------------------------------------------
 echo                         ^|                Question 03                 ^|
 echo                         ----------------------------------------------
-echo                         ^| Please enter the directory your current    ^|
-echo                         ^| hakchi2 folder is located.                 ^|
+echo                         ^| Please select the directory your current   ^|
+echo                         ^| hakchi2 directory.                         ^|
 echo                         ^| For example:                               ^|
 echo                         ^| D:\data\hakchi2                            ^|
 echo                         ----------------------------------------------
@@ -267,14 +282,14 @@ echo.
 echo.
 echo.
 echo.
+echo.                                             
 echo.
-echo.                                              
-echo ^(Your current directory is: !cd!\^)
 :Ask
-set /P inputdirname= Please enter a valid directory:
-rem clean up any potential mistakes....
-set "inputdirname=!inputdirname:/=\!"
-set "inputdirname=!inputdirname:;=:!"
+echo Select your current hakchi2 directory...
+For /F "Tokens=1 Delims=" %%I In ('cscript //nologo "!tmp!"\Hakchi_BrowseFolder.vbs') Do set _FolderName=%%I
+if [!_FolderName!] == [] set "_FolderName=" && call :msg "You didn't select a valid directory! Please try again" && goto screen5
+set inputdirname=_FolderName
+set "_FolderName="
 if "!HAKCHI_MODE!" == "NAND" (
 echo.
 echo                            __ __     __       __   _ ___    _________
@@ -1577,3 +1592,53 @@ echo.
 echo You're welcome world...
 echo.
 exit /b
+
+
+rem Module initialising
+:initialise
+
+rem Update these 3 variables if you intend to update the script...
+rem Note: Change this to auto fetch the latest build
+set HakchiBuild=hakchi2_CE_1.1.0
+set HakchiBuildURL=https://github.com/TeamShinkansen/hakchi2/releases/download/v1.1.0/hakchi2_CE_1.1.0.zip
+set HakchiBuildLastUpdated=19th Feburary 2018
+
+rem Dynamicly create the folder browse VB script in temp directory...
+del "!tmp!"\Hakchi_BrowseFolder.vbs >nul 2>&1
+@echo Const MY_COMPUTER = ^&H11^& >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Const WINDOW_HANDLE = 0 >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Const OPTIONS = 0  >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo. >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Set objShell = CreateObject("Shell.Application") >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Set objFolder = objShell.Namespace(MY_COMPUTER) >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Set objFolderItem = objFolder.Self >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo strPath = objFolderItem.Path >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo. >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Set objShell = CreateObject("Shell.Application") >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Set objFolder = objShell.BrowseForFolder _ >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo     (WINDOW_HANDLE, "Select a folder:", OPTIONS, strPath) >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo. >> "!tmp!"\Hakchi_BrowseFolder.vbs     
+@echo If objFolder Is Nothing Then >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo     Wscript.Quit >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo End If >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo. >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Set objFolderItem = objFolder.Self >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo objPath = objFolderItem.Path >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo. >> "!tmp!"\Hakchi_BrowseFolder.vbs
+@echo Wscript.Echo objPath >> "!tmp!"\Hakchi_BrowseFolder.vbs
+
+goto finish_initialise
+rem Finished initialising
+
+rem Functions
+:msg 
+echo set WshShell = WScript.CreateObject("WScript.Shell") > "!tmp!"\hakchi_msg_tmp.vbs
+echo WScript.Quit (WshShell.Popup( "%~1" ,10 ,"Hakchi2ce Easy Installer/Updater", 0)) >> "!tmp!"\hakchi_msg_tmp.vbs
+cscript /nologo "!tmp!"\hakchi_msg_tmp.vbs
+if !errorlevel!==1 (
+  echo You Clicked OK
+) else (
+  echo The Message timed out.
+)
+del "!tmp!"\tmp.vbs
+EXIT /B 0
