@@ -116,7 +116,7 @@ echo  It should also be noted that you CAN NOT brick your console using this app
 echo  has yet to be a case of a bricked console using this software.
 echo.
 echo  It is strongly recommended you keep your stock kernel image safe if you have it. If 
-echo  you are installing from fresh. You will have an opputunity to dump this later. 
+echo  you are installing from fresh. You will have an opportunity to dump this later. 
 echo  KEEP THIS SAFE! 
 echo.
 echo  If in the future you lose your stock kernel. You can find the stock kernel online using
