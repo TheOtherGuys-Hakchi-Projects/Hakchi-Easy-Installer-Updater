@@ -469,7 +469,6 @@ pause
 rem ============================================================================================
 rem SCREEN 6b - Confirmation...
 rem ============================================================================================
-echo "fuck"
 echo.
 echo                                   __ __     __       __   _ ___  
 echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
@@ -1245,85 +1244,83 @@ set CUSTOM6=Y
 if NOT DEFINED CUSTOM6 ( set CUSTOM6=N )
 echo.
 rem ============================================================================================
-if "!HAKCHI_MODE!" == "USB " (
-	echo.
-	echo --------------------------------------------------
-	echo Hakchi Advanced Music Hack by Swingflip
-	echo --------------------------------------------------
-	echo This module will disable NES/SNES Mini's default menu music and randomly play as much
-	echo custom music you want, located on your external USB/SD drive...
-	:AskCustomContent7
-	set INPUT=
-	set /P INPUT="Do you want to install the Hakchi Advanced Music Hack Mod^? (Y/N)" !=!
-	if /I "!INPUT!"=="y" goto InstallCustomContent7
-	if /I "!INPUT!"=="n" goto Continue7
-	echo Incorrect input & goto AskCustomContent7
-	:InstallCustomContent7
-	set CustomContentBuild=Hakchi_Advanced_Music_Hack_v2_1
-	set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi_Advanced_Music_Hack/releases/download/v2_0_1/Hakchi_Advanced_Music_Hack_v2_0_1.hmod
-	set CustomContentBuildLastUpdated=22nd March 2018
-	echo Downloading the latest !CustomContentBuild! build...
-	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
-	if exist "!tmp!"\!CustomContentBuild!.hmod (
-	del "!tmp!"\!CustomContentBuild!.hmod
-	)
-	powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
-	if not %errorlevel%==0 (
-		echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
-		pause
-		exit /b
-	)
-	if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
-	echo.
-
-	rem echo Unzipping package...
-	rem mkdir "!tmp!"\!CustomContentBuild!
-	rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
-	rem if not %errorlevel%==0 (
-	rem 	echo [ERROR] - Couldn't download unzip downloaded package
-	rem 	del "!tmp!"\package.zip
-	rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
-	rem 	pause
-	rem 	exit /b
-	rem )
-	rem del "!tmp!"\package.zip
-	rem echo [OK] - Unzipped succesfully!
-
-	rem We transfer directly into the hmod so they get installed during the kernel flash
-	if "!HAKCHI_MODE!" == "NAND" (
-		if "!INSTALL_MODE!" == "UPDATE " (
-			echo Copying files over to: !inputdirname!\mods\hmods
-			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
-		)
-		if "!INSTALL_MODE!" == "INSTALL" (
-			echo Copying files over to: !inputdirname!\mods\hmods
-			xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
-		)
-	)
-	rem We transfer to the transfer folder as these should just install when run
-	if "!HAKCHI_MODE!" == "USB " (
-		if "!INSTALL_MODE!" == "UPDATE " (
-			mkdir %inputdirname:~0,2%\hakchi\transfer		
-			echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
-			echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
-		)
-		if "!INSTALL_MODE!" == "INSTALL" (
-			mkdir !inputdirname!\hakchi\transfer
-			echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
-			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
-			echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
-			xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
-		)
-	)
-	echo [OK] - Installed !CustomContentBuild! Successfully!
-	rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
-	set CUSTOM7=Y
-	:Continue7
-	if NOT DEFINED CUSTOM7 ( set CUSTOM7=N )
-	echo.
+echo.
+echo --------------------------------------------------
+echo Hakchi Advanced Music Hack by Swingflip
+echo --------------------------------------------------
+echo This module will disable NES/SNES Mini's default menu music and randomly play as much
+echo custom music you want, located on your external USB/SD drive...
+:AskCustomContent7
+set INPUT=
+set /P INPUT="Do you want to install the Hakchi Advanced Music Hack Mod^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto InstallCustomContent7
+if /I "!INPUT!"=="n" goto Continue7
+echo Incorrect input & goto AskCustomContent7
+:InstallCustomContent7
+set CustomContentBuild=Hakchi_Advanced_Music_Hack_v2_1
+set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi_Advanced_Music_Hack/releases/download/v2_0_1/Hakchi_Advanced_Music_Hack_v2_0_1.hmod
+set CustomContentBuildLastUpdated=22nd March 2018
+echo Downloading the latest !CustomContentBuild! build...
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
 )
+powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+if not %errorlevel%==0 (
+	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+	pause
+	exit /b
+)
+if exist "!tmp!"\!CustomContentBuild!.hmod ( echo [OK] - Downloaded successfully^! )
+echo.
+
+rem echo Unzipping package...
+rem mkdir "!tmp!"\!CustomContentBuild!
+rem powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\package.zip'); $target.CopyHere($zip.Items(), 16); }"
+rem if not %errorlevel%==0 (
+rem 	echo [ERROR] - Couldn't download unzip downloaded package
+rem 	del "!tmp!"\package.zip
+rem 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
+rem 	pause
+rem 	exit /b
+rem )
+rem del "!tmp!"\package.zip
+rem echo [OK] - Unzipped succesfully!
+
+rem We transfer directly into the hmod so they get installed during the kernel flash
+if "!HAKCHI_MODE!" == "NAND" (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+	)
+)
+rem We transfer to the transfer folder as these should just install when run
+if "!HAKCHI_MODE!" == "USB " (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		mkdir %inputdirname:~0,2%\hakchi\transfer		
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		mkdir !inputdirname!\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod %inputdirname:~0,2%\data\transfer_backup
+	)
+)
+echo [OK] - Installed !CustomContentBuild! Successfully!
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+set CUSTOM7=Y
+:Continue7
+if NOT DEFINED CUSTOM7 ( set CUSTOM7=N )
+echo.
 rem ============================================================================================
 echo.
 echo --------------------------------------------------
