@@ -42,14 +42,14 @@ echo.
 echo.
 echo.
 echo.                      
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  (_)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
-echo.
+echo                              Presented by www.hakchiresources.com
 echo.
 echo.
 echo.
@@ -70,12 +70,12 @@ rem ============================================================================
 rem SCREEN 2a - Info screen...
 rem ============================================================================================
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  (_)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -88,12 +88,12 @@ echo.
 echo  You will be ask a series of questions so just follow them step by step and this app will 
 echo  do most of the work for you in getting you up and running.
 echo.
-echo  if you have any issues with the install process you can ask for help at the SNES mini
-echo  reddit page at: www.reddit.com/r/miniSNESmods
-echo.   
+echo  If you have any issues with the install process you can ask for help at the SNES mini
+echo  reddit page at: www.reddit.com/r/miniSNESmods or find us at:
+echo  www.hakchiresources.com   
+echo.
 echo  Good luck and have fun^!
 echo  Swingflip x
-echo.
 echo.
 echo.
 echo.
@@ -112,12 +112,12 @@ rem ============================================================================
 rem SCREEN 2b - Disclaimer...
 rem ============================================================================================
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  (_)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -156,12 +156,12 @@ rem ============================================================================
 rem SCREEN 3 - USB-HOST or NAND screen...
 rem ============================================================================================
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  (_)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -203,12 +203,12 @@ rem ============================================================================
 rem SCREEN 4 - Install or update...
 rem ============================================================================================
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  (_)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -251,12 +251,12 @@ rem SCREEN 5 - Set working directory...
 rem ============================================================================================
 if "!INSTALL_MODE!" == "UPDATE " (
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  ^(_^)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -292,12 +292,12 @@ set inputdirname=!_FolderName!
 set "!_FolderName!="
 if "!HAKCHI_MODE!" == "NAND" (
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  ^(_^)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -332,18 +332,17 @@ if [!_FolderName!] == [] set "_FolderName=" && call :msg "You didn't select a va
 set inputnanddirname=!_FolderName!
 set "!_FolderName!="
 )
-echo "I ran ok"
 goto screen6
 )
 if "!INSTALL_MODE!" == "INSTALL" (
 if "!HAKCHI_MODE!" == "NAND" (
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  ^(_^)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -381,12 +380,12 @@ goto screen6
 )
 if "!HAKCHI_MODE!" == "USB " (
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  ^(_^)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -431,12 +430,12 @@ rem SCREEN 6a - Update warning...
 rem ============================================================================================
 if "!INSTALL_MODE!" == "UPDATE "  (
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  ^(_^)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -472,12 +471,12 @@ rem SCREEN 6b - Confirmation...
 rem ============================================================================================
 echo "fuck"
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -518,39 +517,7 @@ rem ============================================================================
 rem ============================================================================================
 rem SCREEN 7 - Do stuff and run the app....
 rem ============================================================================================
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.   
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.
-echo.                                              
-echo.
+cls
 echo checking internet connection...
 Ping www.google.com -n 1 -w 1000>nul 2>&1
 if errorlevel 1 (set internet=N) else (set internet=Y)
@@ -831,12 +798,12 @@ rem ============================================================================
 rem SCREEN 8 - Custom good shit...
 rem ============================================================================================
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
@@ -878,6 +845,7 @@ rem 									    STARTS HERE
 rem ============================================================================================  
 rem TODO: we could function'ise' a lot of this but every mod is slightly different so maybe it's 
 rem best to keep it like this so we can chop and swap stuff as and when we need to...
+cls
 echo.
 echo --------------------------------------------------
 echo Hakchi Options Menu by CompCom
@@ -892,8 +860,8 @@ if /I "!INPUT!"=="y" goto InstallCustomContent1
 if /I "!INPUT!"=="n" goto Continue1
 echo Incorrect input & goto AskCustomContent1
 :InstallCustomContent1
-set CustomContentBuild=Options_Deluxe_v1_0_0
-set CustomContentBuildURL=https://github.com/CompCom/OptionsMenu/releases/download/v1.0/options_deluxe_v1_0_0.hmod
+set CustomContentBuild=Options_Deluxe_v1_1_0
+set CustomContentBuildURL=https://github.com/CompCom/OptionsMenu/releases/download/v1.1/options_deluxe_v1_1_0.hmod
 set CustomContentBuildLastUpdated=2nd March 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue2 )
@@ -1121,21 +1089,21 @@ echo.
 rem ============================================================================================
 echo.
 echo --------------------------------------------------
-echo RetroArch 'Neo' 1.7.0 compiled by 'The Other Guys'
+echo RetroArch 'Neo' 1.7.1 compiled by 'The Other Guys'
 echo --------------------------------------------------
 echo Retroarch is the core application for your emulation needs. You will need RetroArch if you
 echo intend on using any emulator on the system that isn't the default built in one. This
 echo retroarch is set up specificly to work with the current release of Hakchi2ce
 :AskCustomContent4
 set INPUT=
-set /P INPUT="Do you want to install RetroArch 1.7.0^? (Y/N)" !=!
+set /P INPUT="Do you want to install RetroArch 1.7.1d^? (Y/N)" !=!
 if /I "!INPUT!"=="y" goto InstallCustomContent4
 if /I "!INPUT!"=="n" goto Continue4
 echo Incorrect input & goto AskCustomContent4
 :InstallCustomContent4
-set CustomContentBuild=RetroArch_Neo_v1_7_0c
-set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi-Retroarch-Neo-1.7.0/releases/download/Release_Candidate_c/Hakchi_Retroarch_Neo_v1_7_0c.hmod
-set CustomContentBuildLastUpdated=19th Feburary 2018
+set CustomContentBuild=RetroArch_Neo_v1_7_1d
+set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi-Retroarch-Neo-1.7.0/releases/download/v1.7.1d/Hakchi_Retroarch_Neo_v1_7_1d.hmod
+set CustomContentBuildLastUpdated=22nd March 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue4 )
 if exist "!tmp!"\!CustomContentBuild!.hmod (
@@ -1204,7 +1172,7 @@ echo Hakchi Video Splash Screen Mod by 'The Other Guys'
 echo --------------------------------------------------
 echo It's an awesome Hakchi2 module (HMOD) which adds a video splash screen to your Nintendo
 echo SNES and NES Classic console. It currently supports up-to 480p video and now supports
-echo audio as well!
+echo audio as well! (10mb NAND space required!)
 :AskCustomContent6
 set INPUT=
 set /P INPUT="Do you want to install the Hakchi Video Splash Screen Mod^? (Y/N)" !=!
@@ -1286,14 +1254,14 @@ if "!HAKCHI_MODE!" == "USB " (
 	echo custom music you want, located on your external USB/SD drive...
 	:AskCustomContent7
 	set INPUT=
-	set /P INPUT="Do you want to install the Hakchi Video Splash Screen Mod^? (Y/N)" !=!
+	set /P INPUT="Do you want to install the Hakchi Advanced Music Hack Mod^? (Y/N)" !=!
 	if /I "!INPUT!"=="y" goto InstallCustomContent7
 	if /I "!INPUT!"=="n" goto Continue7
 	echo Incorrect input & goto AskCustomContent7
 	:InstallCustomContent7
-	set CustomContentBuild=Hakchi_Advanced_Music_Hack_v1_0
-	set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi_Advanced_Music_Hack/releases/download/v1_0_0/Hakchi_Advanced_Music_Hack.hmod
-	set CustomContentBuildLastUpdated=2nd March 2018
+	set CustomContentBuild=Hakchi_Advanced_Music_Hack_v2_1
+	set CustomContentBuildURL=https://github.com/TheOtherGuys-Hakchi-Projects/Hakchi_Advanced_Music_Hack/releases/download/v2_0_1/Hakchi_Advanced_Music_Hack_v2_0_1.hmod
+	set CustomContentBuildLastUpdated=22nd March 2018
 	echo Downloading the latest !CustomContentBuild! build...
 	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
 	if exist "!tmp!"\!CustomContentBuild!.hmod (
@@ -1448,12 +1416,12 @@ rem 									   FINISHES HERE
 rem ============================================================================================    
 cls
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
@@ -1463,10 +1431,10 @@ echo.
 echo Hakchi Options Menu by CompCom                     Installed - !CUSTOM1!
 echo Hibernate Mod ^(Lite^) by Swingflip                  Installed - !CUSTOM2!
 echo Canoe Save Compression Mod ^(FAST^) by CompCom       Installed - !CUSTOM3!
-echo RetroArch 'Neo' 1.7.0 compiled by 'The Other Guys' Installed - !CUSTOM4!
+echo RetroArch 'Neo' 1.7.1 compiled by 'The Other Guys' Installed - !CUSTOM4!
 rem saving Custom 5 for essential cores for RetroArch
 echo Hakchi Video Splash Screen Mod by 'The Other Guys' Installed - !CUSTOM6!
-echo Hakchi Advanced Music Hack by Swingflip (USB ONLY) Installed - !CUSTOM7!
+echo Hakchi Advanced Music Hack by Swingflip            Installed - !CUSTOM7!
 echo Super Famicom English Translation by rhester72     Installed - !CUSTOM8!
 echo.
 echo Latest Hakchi2ce installed and optional content installed succesfully!
@@ -1560,12 +1528,12 @@ rem ============================================================================
 :final
 cls
 echo.
-echo                            __ __     __       __   _ ___    _________
-echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
-echo                          / _  / _ `/  '_/ __/ _ \/ / __/  / /__/ _/  
-echo                         /_//_/\_,_/_/\_\\__/_//_/_/____/  \___/___/  
+echo                                   __ __     __       __   _ ___  
+echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
+echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
+echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                Easy Web Installer/Updater v1.0
+echo                                  Easy Installer/Updater v1.0
 echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
@@ -1573,8 +1541,9 @@ echo.
 echo Ok, you should be ready to go! If you have any issues or require any help you can find us 
 echo at the reddit group 'miniSNESmods' @ https://www.reddit.com/r/miniSNESmods/
 echo.
-echo This release was brought you by 'The Other Guys' 
+echo This release was brought you by 'The Other Guys' and Hakchi Resources
 echo https://github.com/TheOtherGuys-Hakchi-Projects
+echo https://www.hakchiresources.com
 echo. 
 echo Credits: Swingflip, CompCom, DNA64, bslenul, Defkorns 
 echo Shout Outs: TeamShinkansen for Hakchi2ce and KMFDManic for his work on RA and cores
