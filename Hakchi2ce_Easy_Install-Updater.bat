@@ -288,8 +288,8 @@ echo.
 echo Select your current hakchi2 directory...
 For /F "Tokens=1 Delims=" %%I In ('cscript //nologo "!tmp!"\Hakchi_BrowseFolder.vbs') Do set _FolderName=%%I
 if [!_FolderName!] == [] set "_FolderName=" && call :msg "You didn't select a valid directory! Please try again" && goto screen5
-set inputdirname=_FolderName
-set "_FolderName="
+set inputdirname=!_FolderName!
+set "!_FolderName!="
 if "!HAKCHI_MODE!" == "NAND" (
 echo.
 echo                            __ __     __       __   _ ___    _________
@@ -308,7 +308,7 @@ echo.
 echo                         ----------------------------------------------
 echo                         ^|                Question 04                 ^|
 echo                         ----------------------------------------------
-echo                         ^| Please enter the directory you wish to     ^|
+echo                         ^| Please select the directory you wish to    ^|
 echo                         ^| install hakchi2 CE.                        ^|
 echo                         ^| For example:                               ^|
 echo                         ^| C:\Hakchi2ce                               ^|
@@ -324,15 +324,15 @@ echo.
 echo.
 echo.
 echo.
-echo.                                              
-echo ^(Your current directory is: !cd!\^)
+echo.
 :Ask
-set /P inputnanddirname= Please enter a valid directory:
-rem clean up any potential mistakes....
-set "inputnanddirname=!inputnanddirname:/=\!"
-set "inputnanddirname=!inputnanddirname:;=:!"
+echo Select your new hakchi2ce directory...
+For /F "Tokens=1 Delims=" %%I In ('cscript //nologo "!tmp!"\Hakchi_BrowseFolder.vbs') Do set _FolderName=%%I
+if [!_FolderName!] == [] set "_FolderName=" && call :msg "You didn't select a valid directory! Please try again" && goto screen5
+set inputnanddirname=!_FolderName!
+set "!_FolderName!="
 )
-if "!inputdirname!" == "/=\" set "inputdirname=" && goto screen5
+echo "I ran ok"
 goto screen6
 )
 if "!INSTALL_MODE!" == "INSTALL" (
@@ -371,13 +371,12 @@ echo.
 echo.
 echo.
 echo.                                              
-echo ^(Your current directory is: !cd!\^)
 :Ask
-set /P inputdirname= Please enter a valid directory:
-rem clean up any potential mistakes....
-set "inputdirname=!inputdirname:/=\!"
-set "inputdirname=!inputdirname:;=:!"
-if "!inputdirname!" == "/=\" set "inputdirname=" && goto screen5
+echo Select your new hakchi2ce directory...
+For /F "Tokens=1 Delims=" %%I In ('cscript //nologo "!tmp!"\Hakchi_BrowseFolder.vbs') Do set _FolderName=%%I
+if [!_FolderName!] == [] set "_FolderName=" && call :msg "You didn't select a valid directory! Please try again" && goto screen5
+set inputdirname=!_FolderName!
+set "!_FolderName!="
 goto screen6
 )
 if "!HAKCHI_MODE!" == "USB " (
@@ -414,24 +413,27 @@ echo.
 echo.
 echo.
 echo.
-echo.                                              
-echo ^(Your current directory is: !cd!\^)
+echo.                                   
 :Ask
-set /P inputdirname= Please enter a valid directory:
-rem clean up any potential mistakes....
-set "inputdirname=!inputdirname:/=\!"
-set "inputdirname=!inputdirname:;=:!"
-if "!inputdirname!" == "/=\" set "inputdirname=" && goto screen5
+echo Select your new hakchi2ce directory...
+For /F "Tokens=1 Delims=" %%I In ('cscript //nologo "!tmp!"\Hakchi_BrowseFolder.vbs') Do set _FolderName=%%I
+if [!_FolderName!] == [] set "_FolderName=" && call :msg "You didn't select a valid directory! Please try again" && goto screen5
+set inputdirname=!_FolderName!
+set "!_FolderName!="
 goto screen6
 )
 )
 rem ============================================================================================  
 
 :screen6
+echo "ok"
+echo "!INSTALL_MODE!"
+echo "ok2"
 rem ============================================================================================
 rem SCREEN 6a - Update warning...
 rem ============================================================================================
-if "!INSTALL_MODE!" == "UPDATE " (
+if "!INSTALL_MODE!"=="UPDATE " (
+echo "ok3"
 echo.
 echo                            __ __     __       __   _ ___    _________
 echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
@@ -472,6 +474,7 @@ pause
 rem ============================================================================================
 rem SCREEN 6b - Confirmation...
 rem ============================================================================================
+echo "fuck"
 echo.
 echo                            __ __     __       __   _ ___    _________
 echo                           / // /__ _/ /______/ /  (_)_  ^|  / ___/ __/
