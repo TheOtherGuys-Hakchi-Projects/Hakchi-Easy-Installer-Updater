@@ -633,12 +633,12 @@ rem INSTALLER/UPDATE FOLDERS
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputnanddirname!
-		xcopy /s /y "!tmp!"\hakchi2ce !inputnanddirname!
-		if exist !inputnanddirname!\hakchi.exe (
+		xcopy /s /y "!tmp!"\hakchi2ce "!inputnanddirname!"
+		if exist "!inputnanddirname!"\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
 			rem rmdir /S /Q "!tmp!"\hakchi2ce
 		)
-		if not exist !inputnanddirname!\hakchi.exe (
+		if not exist "!inputnanddirname!"\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
@@ -647,20 +647,20 @@ if "!HAKCHI_MODE!" == "NAND" (
 		echo Copying old Hakchi2 files over to new build...
 		echo If you are asked if something is a file or directory, type D for directory...
 		pause
-		if not exist !inputdirname!\games mkdir !inputdirname!\games
-		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
-		move /Y !inputdirname!\games !inputnanddirname!\games
-		move /Y !inputdirname!\games_snes !inputnanddirname!\games_snes
-		if not exist !inputdirname!\games mkdir !inputdirname!\games
-		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
-		xcopy /s /y !inputdirname!\games_cache !inputnanddirname!\games_cache
-		xcopy /s /y !inputdirname!\games_originals !inputnanddirname!\games_originals
-		xcopy /s /y !inputdirname!\config !inputnanddirname!\config
-		xcopy /s /y !inputdirname!\dump !inputnanddirname!\dump
-		xcopy /s /y !inputdirname!\art !inputnanddirname!\art
-		xcopy /s /y !inputdirname!\folder_images !inputnanddirname!\folder_images
-		xcopy /s /y !inputdirname!\user_mods !inputnanddirname!\user_mods
-		xcopy /s /y "!tmp!"\hakchi2ce\user_mods !inputnanddirname!\user_mods
+		if not exist "!inputdirname!"\games mkdir "!inputdirname!"\games
+		if not exist "!inputdirname!"\games_snes mkdir "!inputdirname!"\games_snes
+		move /Y "!inputdirname!"\games "!inputnanddirname!"\games
+		move /Y "!inputdirname!"\games_snes "!inputnanddirname!"\games_snes
+		if not exist "!inputdirname!"\games mkdir "!inputdirname!"\games
+		if not exist "!inputdirname!"\games_snes mkdir "!inputdirname!"\games_snes
+		xcopy /s /y "!inputdirname!"\games_cache "!inputnanddirname!"\games_cache
+		xcopy /s /y "!inputdirname!"\games_originals "!inputnanddirname!"\games_originals
+		xcopy /s /y "!inputdirname!"\config "!inputnanddirname!"\config
+		xcopy /s /y "!inputdirname!"\dump "!inputnanddirname!"\dump
+		xcopy /s /y "!inputdirname!"\art "!inputnanddirname!"\art
+		xcopy /s /y "!inputdirname!"\folder_images "!inputnanddirname!"\folder_images
+		xcopy /s /y "!inputdirname!"\user_mods "!inputnanddirname!"\user_mods
+		xcopy /s /y "!tmp!"\hakchi2ce\user_mods "!inputnanddirname!"\user_mods
 		echo [OK] - Copied old Hakchi2 files succesfully!
 		rmdir /S /Q "!tmp!"\hakchi2ce
 		rem set file=!inputnanddirname!\config\config.ini
@@ -677,12 +677,12 @@ if "!HAKCHI_MODE!" == "NAND" (
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!
-		xcopy /s "!tmp!"\hakchi2ce !inputdirname!
-		if exist !inputdirname!\hakchi.exe (
+		xcopy /s "!tmp!"\hakchi2ce "!inputdirname!"
+		if exist "!inputdirname!"\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 		)
-		if not exist !inputdirname!\hakchi.exe (
+		if not exist "!inputdirname!"\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
@@ -707,19 +707,19 @@ if "!HAKCHI_MODE!" == "USB " (
 		echo Copying old Hakchi2 files over to new build...
 		echo If you are asked if something is a file or directory, type D for directory...
 		pause
-		if not exist !inputdirname!\games mkdir !inputdirname!\games
-		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
-		move /Y !inputdirname!\games %inputdirname:~0,2%\data\hakchi2ce\games
-		move /Y !inputdirname!\games_snes %inputdirname:~0,2%\data\hakchi2ce\games_snes
-		if not exist !inputdirname!\games mkdir !inputdirname!\games
-		if not exist !inputdirname!\games_snes mkdir !inputdirname!\games_snes
-		xcopy /s /y !inputdirname!\games_cache %inputdirname:~0,2%\data\hakchi2ce\games_cache
-		xcopy /s /y !inputdirname!\games_originals %inputdirname:~0,2%\data\hakchi2ce\games_originals
-		xcopy /s /y !inputdirname!\config %inputdirname:~0,2%\data\hakchi2ce\config
-		xcopy /s /y !inputdirname!\dump !inputnanddirname!\dump
-		xcopy /s /y !inputdirname!\art %inputdirname:~0,2%\data\hakchi2ce\art
-		xcopy /s /y !inputdirname!\folder_images %inputdirname:~0,2%\data\hakchi2ce\folder_images
-		xcopy /s /y !inputdirname!\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
+		if not exist "!inputdirname!"\games mkdir "!inputdirname!"\games
+		if not exist "!inputdirname!"\games_snes mkdir "!inputdirname!"\games_snes
+		move /Y "!inputdirname!"\games %inputdirname:~0,2%\data\hakchi2ce\games
+		move /Y "!inputdirname!"\games_snes %inputdirname:~0,2%\data\hakchi2ce\games_snes
+		if not exist "!inputdirname!"\games mkdir "!inputdirname!"\games
+		if not exist "!inputdirname!"\games_snes mkdir "!inputdirname!"\games_snes
+		xcopy /s /y "!inputdirname!"\games_cache %inputdirname:~0,2%\data\hakchi2ce\games_cache
+		xcopy /s /y "!inputdirname!"\games_originals %inputdirname:~0,2%\data\hakchi2ce\games_originals
+		xcopy /s /y "!inputdirname!"\config %inputdirname:~0,2%\data\hakchi2ce\config
+		xcopy /s /y "!inputdirname!"\dump !inputnanddirname!\dump
+		xcopy /s /y "!inputdirname!"\art %inputdirname:~0,2%\data\hakchi2ce\art
+		xcopy /s /y "!inputdirname!"\folder_images %inputdirname:~0,2%\data\hakchi2ce\folder_images
+		xcopy /s /y "!inputdirname!"\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
 		xcopy /s /y "!tmp!"\hakchi2ce\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
 		echo [OK] - Copied old Hakchi2 files succesfully!
 		rmdir /S /Q "!tmp!"\hakchi2ce
@@ -737,12 +737,12 @@ if "!HAKCHI_MODE!" == "USB " (
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\data\hakchi2ce
-		xcopy /s "!tmp!"\hakchi2ce !inputdirname!\data\hakchi2ce
-		if exist !inputdirname!\data\hakchi2ce\hakchi.exe (
+		xcopy /s "!tmp!"\hakchi2ce "!inputdirname!"\data\hakchi2ce
+		if exist "!inputdirname!"\data\hakchi2ce\hakchi.exe (
 			echo [OK] - Copied hakchi2ce succesfully! 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 		)
-		if not exist !inputdirname!\data\hakchi2ce\hakchi.exe (
+		if not exist "!inputdirname!"\data\hakchi2ce\hakchi.exe (
 			echo [ERROR] - Failed to copy hakchi2ce 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 			pause
@@ -893,11 +893,11 @@ rem We transfer directly into the hmod so they get installed during the kernel f
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -976,11 +976,11 @@ if "!CUSTOM1!" == "N" (
 	if "!HAKCHI_MODE!" == "NAND" (
 		if "!INSTALL_MODE!" == "UPDATE " (
 			echo Copying files over to: !inputdirname!\mods\hmods
-			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+			xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 		)
 		if "!INSTALL_MODE!" == "INSTALL" (
 			echo Copying files over to: !inputdirname!\mods\hmods
-			xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+			xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 		)
 	)
 	rem We transfer to the transfer folder as these should just install when run
@@ -1055,11 +1055,11 @@ rem We transfer directly into the hmod so they get installed during the kernel f
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -1134,11 +1134,11 @@ rem We transfer directly into the hmod so they get installed during the kernel f
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -1213,11 +1213,11 @@ rem We transfer directly into the hmod so they get installed during the kernel f
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -1291,11 +1291,11 @@ rem We transfer directly into the hmod so they get installed during the kernel f
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
@@ -1370,11 +1370,11 @@ rem We transfer directly into the hmod so they get installed during the kernel f
 if "!HAKCHI_MODE!" == "NAND" (
 	if "!INSTALL_MODE!" == "UPDATE " (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod !inputnanddirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild!.hmod "!inputnanddirname!"\mods\hmods
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\mods\hmods
-		xcopy /s "!tmp!"\!CustomContentBuild!.hmod !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild!.hmod "!inputdirname!"\mods\hmods
 	)
 )
 rem We transfer to the transfer folder as these should just install when run
