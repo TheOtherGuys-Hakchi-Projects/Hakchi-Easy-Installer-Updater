@@ -20,6 +20,7 @@ mode con: cols=92 lines=35
 setlocal enabledelayedexpansion
 color 0A
 
+
 rem Initialise Module...
 goto initialise
 :finish_initialise
