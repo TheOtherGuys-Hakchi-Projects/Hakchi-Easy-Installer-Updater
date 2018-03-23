@@ -19,6 +19,7 @@ REM BFCPEOPTIONEND
 mode con: cols=92 lines=35
 setlocal enabledelayedexpansion
 color 0A
+set InstallerBuild=1.0
 
 
 rem Initialize Module...
@@ -48,7 +49,7 @@ echo                                  / // /__ _/ /______/ /  (_)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo                              Presented by www.hakchiresources.com
 echo.
@@ -76,7 +77,7 @@ echo                                  / // /__ _/ /______/ /  (_)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -118,7 +119,7 @@ echo                                  / // /__ _/ /______/ /  (_)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -163,7 +164,7 @@ echo                                  / // /__ _/ /______/ /  (_)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -211,7 +212,7 @@ echo                                  / // /__ _/ /______/ /  (_)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -260,7 +261,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -301,7 +302,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -346,7 +347,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -389,7 +390,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -440,7 +441,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -480,7 +481,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo.
 echo.
@@ -747,6 +748,7 @@ if "!HAKCHI_MODE!" == "USB " (
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\data\hakchi2ce
 		xcopy /s "!tmp!"\hakchi2ce "!inputdirname!"\data\hakchi2ce
+		CLS
 		if exist "!inputdirname!"\data\hakchi2ce\hakchi.exe (
 			echo [OK] - Copied hakchi2ce successfully! 
 			rmdir /S /Q "!tmp!"\hakchi2ce
@@ -812,7 +814,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
@@ -1526,7 +1528,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
@@ -1639,7 +1641,7 @@ echo                                  / // /__ _/ /______/ /  ^(_^)_  ^|
 echo                                 / _  / _ `/  '_/ __/ _ \/ / __/
 echo                                /_//_/\_,_/_/\_\\__/_//_/_/____/
 echo                         ----------------------------------------------
-echo                                  Easy Installer/Updater v1.0
+echo                                  Easy Installer/Updater v!InstallerBuild!
 echo                         ----------------------------------------------
 echo                               CUSTOM CONTENT AKA "THE GOOD STUFF"
 echo                         ----------------------------------------------
