@@ -21,10 +21,10 @@ setlocal enabledelayedexpansion
 color 0A
 
 
-rem Initialise Module...
-goto initialise
-:finish_initialise
-
+rem Initialize Module...
+goto initialize
+:finish_initialize
+CLS
 rem ============================================================================================
 rem SCREEN 1 - Welcome screen...
 rem ============================================================================================
@@ -66,7 +66,7 @@ echo.
 pause
 rem ============================================================================================
 
-
+CLS
 rem ============================================================================================
 rem SCREEN 2a - Info screen...
 rem ============================================================================================
@@ -108,7 +108,7 @@ echo.
 pause
 rem ============================================================================================
 
-
+CLS
 rem ============================================================================================
 rem SCREEN 2b - Disclaimer...
 rem ============================================================================================
@@ -136,7 +136,7 @@ echo  you are installing from fresh. You will have an opportunity to dump this l
 echo  KEEP THIS SAFE! 
 echo.
 echo  If in the future you lose your stock kernel. You can find the stock kernel online using
-echo  google. We will NOT link to any Nintendo copyrighted materials.
+echo  Google. We will NOT link to any Nintendo copyrighted materials.
 echo.
 echo  If you encounter any issues at any point, you can flash the standard kernel and go back
 echo  to factory defaults.
@@ -153,6 +153,7 @@ rem ============================================================================
 rem lets do this shit...
 
 :screen3
+CLS
 rem ============================================================================================
 rem SCREEN 3 - USB-HOST or NAND screen...
 rem ============================================================================================
@@ -200,6 +201,7 @@ echo Incorrect input & goto screen3
 rem ============================================================================================                                                           
 
 :screen4
+CLS
 rem ============================================================================================
 rem SCREEN 4 - Install or update...
 rem ============================================================================================
@@ -247,6 +249,7 @@ echo Incorrect input & goto screen4
 rem ============================================================================================  
 
 :screen5
+CLS
 rem ============================================================================================
 rem SCREEN 5 - Set working directory...
 rem ============================================================================================
@@ -426,6 +429,7 @@ goto screen6
 rem ============================================================================================  
 
 :screen6
+CLS
 rem ============================================================================================
 rem SCREEN 6a - Update warning...
 rem ============================================================================================
@@ -447,11 +451,11 @@ echo  We attempt to account for every possible permutation of set up / issues th
 echo  However there will be a small amount of people who have issues using the updater.
 echo.
 echo  If you are not bothered about your previous set up, games etc. We always recommend you
-echo  uninstall the custom kernel and flash your stock kernel using any hakchi GUI and run an
+echo  un-install the custom kernel and flash your stock kernel using any hakchi GUI and run an
 echo  install instead of an update using this app.
 echo.
 echo  95% of the time the update routine will run fine however, if you find yourself having
-echo  issues with your console. Make a backup, uninstall the custom kernel and flash your    
+echo  issues with your console. Make a backup, un-install the custom kernel and flash your    
 echo  stock kernel back to the console using Hakchi.
 echo.
 echo  If you do not have your stock kernel any more you can find them online using google.
@@ -514,11 +518,12 @@ echo Incorrect input & goto screen6
 rem ============================================================================================  
 
 :screen7
+CLS
 rem ============================================================================================
 rem SCREEN 7 - Do stuff and run the app....
 rem ============================================================================================
 cls
-echo checking internet connection...
+echo Checking internet connection...
 Ping www.google.com -n 1 -w 1000>nul 2>&1
 if errorlevel 1 (set internet=N) else (set internet=Y)
 
@@ -627,7 +632,7 @@ if not %errorlevel%==0 (
 	exit /b
 )
 del "!tmp!"\package.zip
-echo [OK] - Unzipped succesfully!
+echo [OK] - Unzipped successfully!
 
 rem ============================================================================================
 rem INSTALLER/UPDATE FOLDERS
@@ -636,7 +641,7 @@ if "!HAKCHI_MODE!" == "NAND" (
 		echo Copying files over to: !inputnanddirname!
 		xcopy /s /y "!tmp!"\hakchi2ce "!inputnanddirname!"
 		if exist "!inputnanddirname!"\hakchi.exe (
-			echo [OK] - Copied hakchi2ce succesfully! 
+			echo [OK] - Copied hakchi2ce successfully! 
 			rem rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist "!inputnanddirname!"\hakchi.exe (
@@ -662,7 +667,7 @@ if "!HAKCHI_MODE!" == "NAND" (
 		xcopy /s /y "!inputdirname!"\folder_images "!inputnanddirname!"\folder_images
 		xcopy /s /y "!inputdirname!"\user_mods "!inputnanddirname!"\user_mods
 		xcopy /s /y "!tmp!"\hakchi2ce\user_mods "!inputnanddirname!"\user_mods
-		echo [OK] - Copied old Hakchi2 files succesfully!
+		echo [OK] - Copied old Hakchi2 files successfully!
 		rmdir /S /Q "!tmp!"\hakchi2ce
 		rem set file=!inputnanddirname!\config\config.ini
 		rem echo Fixing up config...
@@ -674,13 +679,13 @@ if "!HAKCHI_MODE!" == "NAND" (
 		rem 	)
 		rem 	ping -n 120 localhost >nul
 		rem goto :loop
-		rem echo [OK] - Fixed up config succesfully!
+		rem echo [OK] - Fixed up config successfully!
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!
 		xcopy /s "!tmp!"\hakchi2ce "!inputdirname!"
 		if exist "!inputdirname!"\hakchi.exe (
-			echo [OK] - Copied hakchi2ce succesfully! 
+			echo [OK] - Copied hakchi2ce successfully! 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist "!inputdirname!"\hakchi.exe (
@@ -696,7 +701,7 @@ if "!HAKCHI_MODE!" == "USB " (
 		echo Copying files over to: %inputdirname:~0,2%\data\hakchi2ce
 		xcopy /s /y "!tmp!"\hakchi2ce %inputdirname:~0,2%\data\hakchi2ce
 		if exist %inputdirname:~0,2%\data\hakchi2ce\hakchi.exe (
-			echo [OK] - Copied hakchi2ce succesfully! 
+			echo [OK] - Copied hakchi2ce successfully! 
 			rem rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist %inputdirname:~0,2%\data\hakchi2ce\hakchi.exe (
@@ -722,7 +727,7 @@ if "!HAKCHI_MODE!" == "USB " (
 		xcopy /s /y "!inputdirname!"\folder_images %inputdirname:~0,2%\data\hakchi2ce\folder_images
 		xcopy /s /y "!inputdirname!"\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
 		xcopy /s /y "!tmp!"\hakchi2ce\user_mods %inputdirname:~0,2%\data\hakchi2ce\user_mods
-		echo [OK] - Copied old Hakchi2 files succesfully!
+		echo [OK] - Copied old Hakchi2 files successfully!
 		rmdir /S /Q "!tmp!"\hakchi2ce
 		rem set file=%inputdirname:~0,2%\data\hakchi2ce\config\config.ini
 		rem echo Fixing up config...
@@ -734,13 +739,13 @@ if "!HAKCHI_MODE!" == "USB " (
 		rem 	)
 		rem 	ping -n 120 localhost >nul
 		rem goto :loop
-		rem echo [OK] - Fixed up config succesfully!
+		rem echo [OK] - Fixed up config successfully!
 	)
 	if "!INSTALL_MODE!" == "INSTALL" (
 		echo Copying files over to: !inputdirname!\data\hakchi2ce
 		xcopy /s "!tmp!"\hakchi2ce "!inputdirname!"\data\hakchi2ce
 		if exist "!inputdirname!"\data\hakchi2ce\hakchi.exe (
-			echo [OK] - Copied hakchi2ce succesfully! 
+			echo [OK] - Copied hakchi2ce successfully! 
 			rmdir /S /Q "!tmp!"\hakchi2ce
 		)
 		if not exist "!inputdirname!"\data\hakchi2ce\hakchi.exe (
@@ -751,7 +756,7 @@ if "!HAKCHI_MODE!" == "USB " (
 		)
 	)
 )
-
+ 
 rem ============================================================================================
 rem ASCII art porn...
 
@@ -794,6 +799,7 @@ if /I "!INPUT!"=="n" goto AskHelp
 echo Incorrect input & goto AskCustomContent
 
 :screen8
+CLS
 rem ============================================================================================
 rem SCREEN 8 - Custom good shit...
 rem ============================================================================================
@@ -833,6 +839,7 @@ echo.
 echo.                                              
 echo.
 pause
+CLS
 rem ============================================================================================
 rem   _____ _    _  _____ _______ ____  __  __    _____ ____  _   _ _______ ______ _   _ _______ 
 rem  / ____| |  | |/ ____|__   __/ __ \|  \/  |  / ____/ __ \| \ | |__   __|  ____| \ | |__   __|
@@ -888,7 +895,7 @@ rem 	pause
 rem 	exit /b
 rem )
 rem del "!tmp!"\package.zip
-rem echo [OK] - Unzipped succesfully!
+rem echo [OK] - Unzipped successfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
@@ -928,11 +935,12 @@ echo.
 rem ============================================================================================
 rem don't install power mod if option mod installed as it conflicts. Actually, it doesn't... Just don't do it.
 if "!CUSTOM1!" == "N" (
+    CLS
 	echo.
 	echo --------------------------------------------------
 	echo Hibernate Mod ^(Lite^) by Swingflip
 	echo --------------------------------------------------
-	echo This is a mod which enables a power menu when you hold L ^+ R ^+ UP during gameplay
+	echo This is a mod which enables a power menu when you hold L ^+ R ^+ UP during game-play
 	echo or when in the menus. You have an option to hibernate or put your console in to
 	echo standby just like if you were using the XBOX or Playstation. You can also remotely
 	echo wake up the console with the gamepad.
@@ -945,7 +953,7 @@ if "!CUSTOM1!" == "N" (
 	:InstallCustomContent2
 	set CustomContentBuild=hibernate_mod_lite_v1_3
 	set CustomContentBuildURL=https://github.com/swingflip/Hakchi-Hibernate-Mod/releases/download/Deluxe_Lite_1_1_3/hibernate_mod_lite_v1_3.hmod
-	set CustomContentBuildLastUpdated=6th Feburary 2018
+	set CustomContentBuildLastUpdated=6th February 2018
 	echo Downloading the latest !CustomContentBuild! build...
 	if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue2 )
 	if exist "!tmp!"\!CustomContentBuild!.hmod (
@@ -971,7 +979,7 @@ if "!CUSTOM1!" == "N" (
 	rem 	exit /b
 	rem )
 	rem del "!tmp!"\package.zip
-	rem echo [OK] - Unzipped succesfully!
+	rem echo [OK] - Unzipped successfully!
 	
 	rem We transfer directly into the hmod so they get installed during the kernel flash
 	if "!HAKCHI_MODE!" == "NAND" (
@@ -1009,6 +1017,7 @@ if "!CUSTOM1!" == "N" (
 	echo.
 )
 rem ============================================================================================
+CLS
 echo.
 echo --------------------------------------------------
 echo Canoe Save Compression Mod ^(FAST^) by CompCom
@@ -1024,7 +1033,7 @@ echo Incorrect input & goto AskCustomContent3
 :InstallCustomContent3
 set CustomContentBuild=canoe_save_compress_fast_v1_2
 set CustomContentBuildURL=https://github.com/CompCom/hmrepo/raw/master/canoe_save_compress_fast.hmod
-set CustomContentBuildLastUpdated=9th Feburary 2018
+set CustomContentBuildLastUpdated=9th February 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue3 )
 if exist "!tmp!"\!CustomContentBuild!.hmod (
@@ -1050,7 +1059,7 @@ rem 	pause
 rem 	exit /b
 rem )
 rem del "!tmp!"\package.zip
-rem echo [OK] - Unzipped succesfully!
+rem echo [OK] - Unzipped successfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
@@ -1087,6 +1096,7 @@ set CUSTOM3=Y
 if NOT DEFINED CUSTOM3 ( set CUSTOM3=N )
 echo.
 rem ============================================================================================
+CLS
 echo.
 echo --------------------------------------------------
 echo RetroArch 'Neo' 1.7.1 compiled by 'The Other Guys'
@@ -1129,7 +1139,7 @@ rem 	pause
 rem 	exit /b
 rem )
 rem del "!tmp!"\package.zip
-rem echo [OK] - Unzipped succesfully!
+rem echo [OK] - Unzipped successfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
@@ -1166,6 +1176,7 @@ set CUSTOM4=Y
 if NOT DEFINED CUSTOM4 ( set CUSTOM4=N )
 echo.
 rem ============================================================================================
+CLS
 echo.
 echo --------------------------------------------------
 echo Hakchi Video Splash Screen Mod by 'The Other Guys'
@@ -1208,7 +1219,7 @@ rem 	pause
 rem 	exit /b
 rem )
 rem del "!tmp!"\package.zip
-rem echo [OK] - Unzipped succesfully!
+rem echo [OK] - Unzipped successfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
@@ -1244,6 +1255,7 @@ set CUSTOM6=Y
 :Continue6
 if NOT DEFINED CUSTOM6 ( set CUSTOM6=N )
 echo.
+CLS
 rem ============================================================================================
 echo.
 echo --------------------------------------------------
@@ -1286,7 +1298,7 @@ rem 	pause
 rem 	exit /b
 rem )
 rem del "!tmp!"\package.zip
-rem echo [OK] - Unzipped succesfully!
+rem echo [OK] - Unzipped successfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
@@ -1323,12 +1335,13 @@ set CUSTOM7=Y
 if NOT DEFINED CUSTOM7 ( set CUSTOM7=N )
 echo.
 rem ============================================================================================
+CLS
 echo.
 echo --------------------------------------------------
 echo Super Famicom English Translation by rhester72
 echo --------------------------------------------------
-echo This is a mod which will translate the Super famicom menu into english. Obviously this is
-echo only required if you have a Super Famicom and want it translated into english...
+echo This is a mod which will translate the Super Famicom menu into English. Obviously this is
+echo only required if you have a Super Famicom and want it translated into English...
 echo I highly recommended NOT installing this on anything but a Super Famicom...
 :AskCustomContent8
 set INPUT=
@@ -1339,7 +1352,7 @@ echo Incorrect input & goto AskCustomContent8
 :InstallCustomContent8
 set CustomContentBuild=sfc_eng_menu_hack_v0_4
 set CustomContentBuildURL=http://www.rendezvo.us/snes/sfc_eng_menu_hack-0.4.hmod
-set CustomContentBuildLastUpdated=9th Feburary 2018
+set CustomContentBuildLastUpdated=9th February 2018
 echo Downloading the latest !CustomContentBuild! build...
 if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue6 )
 if exist "!tmp!"\!CustomContentBuild!.hmod (
@@ -1365,7 +1378,7 @@ rem 	pause
 rem 	exit /b
 rem )
 rem del "!tmp!"\package.zip
-rem echo [OK] - Unzipped succesfully!
+rem echo [OK] - Unzipped successfully!
 
 rem We transfer directly into the hmod so they get installed during the kernel flash
 if "!HAKCHI_MODE!" == "NAND" (
@@ -1399,6 +1412,7 @@ echo [OK] - Installed !CustomContentBuild! Successfully!
 rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
 set CUSTOM8=Y
 :Continue8
+CLS
 if NOT DEFINED CUSTOM8 ( set CUSTOM8=N )
 echo.
 rem ============================================================================================
@@ -1435,13 +1449,14 @@ echo Hakchi Video Splash Screen Mod by 'The Other Guys' Installed - !CUSTOM6!
 echo Hakchi Advanced Music Hack by Swingflip            Installed - !CUSTOM7!
 echo Super Famicom English Translation by rhester72     Installed - !CUSTOM8!
 echo.
-echo Latest Hakchi2ce installed and optional content installed succesfully!
+echo Latest Hakchi2ce installed and optional content installed successfully!
 echo You just need to flash the custom kernel to the console...
 echo.
 
 rem ============================================================================================
 
 :AskHelp
+cls
 set INPUT=
 set /P INPUT="Do you need help on how to install/upgrade the custom kernel^? (Y/N)" !=!
 if /I "!INPUT!"=="y" goto HelpKernel
@@ -1479,7 +1494,7 @@ echo hold the Reset button on your console and turn it ON,
 echo wait until the pop-up disappear before releasing the Reset button.
 pause
 echo.
-echo When the uninstall process is done Hakchi2 CE will ask if you want to flash
+echo When the un-install process is done Hakchi2 CE will ask if you want to flash
 echo the Original kernel, click No.
 pause
 echo.
@@ -1551,7 +1566,7 @@ echo.
 pause
 rem ============================================================================================
 
-rem remember to fix nand install location!
+rem remember to fix NAND install location!
 rem #It's the end of the road for you dickhead...
 :exit
 echo.
@@ -1560,16 +1575,16 @@ echo.
 exit /b
 
 
-rem Module initialising
-:initialise
+rem Module initializing
+:initialize
 
 rem Update these 3 variables if you intend to update the script...
 rem Note: Change this to auto fetch the latest build
 set HakchiBuild=hakchi2_CE_1.1.0
 set HakchiBuildURL=https://github.com/TeamShinkansen/hakchi2/releases/download/v1.1.0/hakchi2_CE_1.1.0.zip
-set HakchiBuildLastUpdated=19th Feburary 2018
+set HakchiBuildLastUpdated=19th February 2018
 
-rem Dynamicly create the folder browse VB script in temp directory...
+rem Dynamically create the folder browse VB script in temp directory...
 del "!tmp!"\Hakchi_BrowseFolder.vbs >nul 2>&1
 @echo Const MY_COMPUTER = ^&H11^& >> "!tmp!"\Hakchi_BrowseFolder.vbs
 @echo Const WINDOW_HANDLE = 0 >> "!tmp!"\Hakchi_BrowseFolder.vbs
@@ -1593,8 +1608,8 @@ del "!tmp!"\Hakchi_BrowseFolder.vbs >nul 2>&1
 @echo. >> "!tmp!"\Hakchi_BrowseFolder.vbs
 @echo Wscript.Echo objPath >> "!tmp!"\Hakchi_BrowseFolder.vbs
 
-goto finish_initialise
-rem Finished initialising
+goto finish_initialize
+rem Finished initializing
 
 rem Functions
 :msg 
