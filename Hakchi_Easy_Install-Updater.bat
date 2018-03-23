@@ -614,7 +614,7 @@ echo.
 if exist "!tmp!"\package.zip (
 del "!tmp!"\package.zip
 )
-wget !HakchiBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !tmp!\pakage.zip
+wget !HakchiBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\package.zip
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!HakchiBuildURL!', '"!tmp!"\package.zip')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download Hakchi from URL: !HakchiBuildURL!
