@@ -878,7 +878,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -963,7 +963,7 @@ if "!CUSTOM1!" == "N" (
 	if exist "!tmp!"\!CustomContentBuild!.hmod (
 	del "!tmp!"\!CustomContentBuild!.hmod
 	)
-	wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+	wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 	REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 	if not %errorlevel%==0 (
 		echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -1044,7 +1044,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -1125,7 +1125,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -1186,6 +1186,89 @@ rem ============================================================================
 CLS
 echo.
 echo --------------------------------------------------
+echo RetroArch 'Essential Cores' by 'Hakchi'
+echo --------------------------------------------------
+echo These are a selection of basic (work out of the box) RetroArch Cores (emulators) for the
+echo SNES and NES Classic console. 
+:AskCustomContent5
+set INPUT=
+set /P INPUT="Do you want to install the RetroArch 'Essential Cores'^? (Y/N)" !=!
+if /I "!INPUT!"=="y" goto InstallCustomContent5
+if /I "!INPUT!"=="n" goto Continue5
+echo Incorrect input & goto AskCustomContent5
+:InstallCustomContent5
+set CustomContentBuild=Hakchi_RetroArch_Essential_Cores_v1_0_0
+set CustomContentBuildURL=https://github.com/hakchi/Hakchi-RetroArch-Essential-Cores/releases/download/v1_0_0/Hakchi_RetroArch_Essential_Cores_v1_0_0.zip
+set CustomContentBuildLastUpdated=23rd March 2018
+echo Downloading the latest !CustomContentBuild! build...
+if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailable at the moment...Skipping Install... && goto Continue5 )
+if exist "!tmp!"\!CustomContentBuild!.hmod (
+del "!tmp!"\!CustomContentBuild!.hmod
+)
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.zip
+REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
+if not %errorlevel%==0 (
+	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
+	pause
+	exit /b
+)
+if exist "!tmp!"\!CustomContentBuild!.zip ( echo [OK] - Downloaded successfully^! )
+echo.
+echo.
+
+echo Unzipping package...
+mkdir "!tmp!"\!CustomContentBuild!
+powershell.exe -nologo -noprofile -command "& { $shell = New-Object -COM Shell.Application; $target = $shell.NameSpace('"!tmp!"\!CustomContentBuild!'); $zip = $shell.NameSpace('"!tmp!"\!CustomContentBuild!.zip'); $target.CopyHere($zip.Items(), 16); }"
+if not %errorlevel%==0 (
+ 	echo [ERROR] - Couldn't download unzip downloaded package
+ 	del "!tmp!"\!CustomContentBuild!.zip
+ 	rmdir /S /Q "!tmp!"\!CustomContentBuild!
+ 	pause
+ 	exit /b
+)
+del "!tmp!"\!CustomContentBuild!.zip
+echo [OK] - Unzipped successfully!
+
+rem We transfer directly into the hmod so they get installed during the kernel flash
+if "!HAKCHI_MODE!" == "NAND" (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s /y "!tmp!"\!CustomContentBuild! "!inputnanddirname!"\mods\hmods
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		echo Copying files over to: !inputdirname!\mods\hmods
+		xcopy /s "!tmp!"\!CustomContentBuild! "!inputdirname!"\mods\hmods
+	)
+)
+rem We transfer to the transfer folder as these should just install when run
+if "!HAKCHI_MODE!" == "USB " (
+	if "!INSTALL_MODE!" == "UPDATE " (
+		mkdir %inputdirname:~0,2%\hakchi\transfer		
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\hakchi2ce "!inputdirname!"
+		xcopy /s /y "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
+	)
+	if "!INSTALL_MODE!" == "INSTALL" (
+		mkdir !inputdirname!\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\hakchi\transfer
+		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\hakchi\transfer
+		echo Copying files over to: %inputdirname:~0,2%\data\transfer_backup
+		xcopy /s "!tmp!"\!CustomContentBuild! %inputdirname:~0,2%\data\transfer_backup
+	)
+)
+echo [OK] - Installed !CustomContentBuild! Successfully!
+rem rmdir /S /Q "!tmp!"\!CustomContentBuild!.hmod
+set CUSTOM5=Y
+:Continue5
+if NOT DEFINED CUSTOM5 ( set CUSTOM5=N )
+echo.
+CLS
+rem ============================================================================================
+CLS
+echo.
+echo --------------------------------------------------
 echo Hakchi Video Splash Screen Mod by 'The Other Guys'
 echo --------------------------------------------------
 echo It's an awesome Hakchi2 module (HMOD) which adds a video splash screen to your Nintendo
@@ -1206,7 +1289,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -1286,7 +1369,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -1367,7 +1450,7 @@ if "!CustomContentBuild!" == "XXXXX" ( echo Unfortunately this mod is unavailabl
 if exist "!tmp!"\!CustomContentBuild!.hmod (
 del "!tmp!"\!CustomContentBuild!.hmod
 )
-wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O !CustomContentBuild!.hmod
+wget !CustomContentBuildURL! --progress=bar --no-check-certificate --secure-protocol=TLSv1_2 -O "!tmp!"\!CustomContentBuild!.hmod
 REM powershell.exe -command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('!CustomContentBuildURL!', '"!tmp!"\!CustomContentBuild!.hmod')"
 if not %errorlevel%==0 (
 	echo [ERROR] - Couldn't download !CustomContentBuild! from URL: !CustomContentBuildURL!
@@ -1454,8 +1537,7 @@ echo Hakchi Options Menu by CompCom                     Installed - !CUSTOM1!
 echo Hibernate Mod ^(Lite^) by Swingflip                  Installed - !CUSTOM2!
 echo Canoe Save Compression Mod ^(FAST^) by CompCom       Installed - !CUSTOM3!
 echo RetroArch 'Neo' 1.7.1 compiled by 'The Other Guys' Installed - !CUSTOM4!
-REM echo Esential Cores for RetroArch                       Installed - !CUSTOM4!
-rem saving Custom 5 for essential cores for RetroArch
+echo RetroArch 'Essential Cores'                        Installed - !CUSTOM5!
 echo Hakchi Video Splash Screen Mod by 'The Other Guys' Installed - !CUSTOM6!
 echo Hakchi Advanced Music Hack by Swingflip            Installed - !CUSTOM7!
 echo Super Famicom English Translation by rhester72     Installed - !CUSTOM8!
@@ -1463,7 +1545,7 @@ echo.
 echo Latest Hakchi2ce installed and optional content installed successfully!
 echo You just need to flash the custom kernel to the console...
 echo.
-
+pause
 rem ============================================================================================
 
 :AskHelp
